@@ -1,0 +1,264 @@
+
+/*Probleme de responsivité !!!*/
+.equipe{
+    
+    grid-column: 3/9;
+
+    display: grid;
+    margin: 5rem 0 ;
+    /*grid-template-columns: repeat(5, 1fr);*/
+    /* grid-template-columns: repeat(auto-fit, minmax(15rem , 20rem) ); */
+    grid-template-columns: max-content 1fr max-content;
+    grid-template-rows: auto;
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+    justify-content: start;
+    align-content: center;
+    
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.slide{
+    display: grid;
+    grid-template-columns: repeat(6, minmax(11rem , 1fr));
+    grid-column-gap: 2rem;
+    width: 50rem;
+    /*maybe slide au milieu peut etre bien pour l'ux*/
+    /*justify-content: center;*/
+    overflow: hidden;
+}
+
+
+
+
+/******responsive xD*******/
+@media screen and (max-width:965px){
+    .slide{
+        width: 37rem;
+    }
+}
+@media screen and (max-width:800px){
+    .slide{
+        width: 25rem;
+    }
+}
+@media screen and (max-width:600px){
+    .slide{
+        width: 11rem;
+    }
+}
+
+
+
+.title-equipe{
+    grid-column: 1/-1;
+    grid-template-columns: 10rem;
+    margin-bottom: 5rem;
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+.membre-card{
+    margin-bottom: 5px;
+    
+    background:none;
+    border: 3px solid rgba(78, 78, 78, 0.226);
+    border-radius: 0.6rem;
+    grid-template-rows: 6.5rem min-content 1fr;
+    display: grid;
+    
+    grid-row-gap: 0.5rem;
+    justify-items: start;
+    align-content: flex-start;
+    align-items: stretch;
+    transition:  .3s ease-in-out all; 
+    overflow: hidden;
+}
+
+
+@keyframes ss {
+    0%{
+        transform: translatex(0px);
+    }
+    100%{
+        transform: translatex(10px);
+    }
+}
+
+.content-equipe{
+    padding-left: 1em;
+    padding-right: 1rem;
+}
+
+.photo{
+    background-image: url(assets/Fichier\ 1@72x.png);
+    background-repeat: no-repeat;
+    background-size: 60%;
+    background-position: center 10px;
+    background-color: rgb(29, 29, 29);
+    width: 10.5rem;
+    border-radius: 5px;
+    height: 6rem;
+    justify-self: center;
+    transition: 0.2s ease-in-out;
+}
+.membre-card:hover .photo{
+    background-size: 70%;
+}
+
+
+.prev{
+    
+    grid-row: 2/3;
+    transform: translateY(-1rem);
+}
+
+.next{
+  
+    transform: translateY(-1rem);
+}
+
+.prev, .next{
+    color: rgb(78, 78, 78);
+    cursor: pointer;
+    align-self: center;
+    font-size: 4rem;
+    transition: 0.2s ease-in-out;
+  
+}
+
+.prev:hover , .next:hover {
+    color: rgb(101, 173, 255);
+}
+
+/***** à faire apparaitre xD****/
+.btn-cv {
+    position: absolute;
+    align-self: flex-start;
+    justify-self: center;
+    transform: translateY(7rem);
+    opacity: 0;
+    transition: 0.2s ease-in-out;
+    
+}
+
+.membre-card::before{
+    
+    position: absolute;
+       content: "";
+       width: 12rem;
+       display: flex;
+       align-items: center;
+       justify-self: center;
+       height: 15rem;
+       /* background:linear-gradient(0deg,#83e7f8d7,#4b8fe9ea,#81b3ff00) ; */
+       /* background:linear-gradient(0deg,#70eaff,#4b90e962,#81b3ff00) ; */
+       background:linear-gradient(0deg,#70eaff77,#4b90e933,#81b3ff00) ;
+       transition: 0.2s ease-in-out;
+       filter: blur(5px);
+       opacity: 0;
+       transition: 0.3s ease-in-out;
+       transform: translateY(100px);
+       z-index: 10;
+    }
+    .membre-card::after{
+    
+        position: absolute;
+           content: "";
+           width: 14rem;
+           
+           display: flex;
+           align-items: center;
+           justify-self: center;
+           transform: translateY(96px);
+           height: 9rem;
+           background-color:var(--c-fond) ;
+           transition: 0.2s ease-in-out;
+           filter: blur(1px);
+           opacity: 0;
+           transition: 0.25s ease-in-out;
+        }
+
+/*******apparition on hover xD******/
+
+.membre-card:hover::before{
+    transform: translateY(75px);
+    opacity: 0.99;
+}
+
+.membre-card:hover .btn-cv{
+    opacity: 0.8;
+    
+}
+
+.membre-card:hover::after{
+    opacity: 0.99;
+
+}
+
+.membre-card:hover{
+    border-color:rgba(122, 195, 255, 0);
+}
+.btn-cv{
+    overflow: hidden;
+    width: fit-content;
+    z-index: 12;
+    transition: 0.2s ease-in-out;
+    background: linear-gradient(0deg,#27609500,#5acaec00) 
+}
+.btn-cv-content{
+    z-index: 10;
+    border: 1px solid var(--c-principal);
+    transition: 0.1s ease-in-out;
+}
+.btn-cv:hover .btn-cv-content{
+    color: black;
+    border: 1px solid rgba(255, 255, 255, 0);
+}
+.btn-cv:hover{
+    background: linear-gradient(0deg,#276095,#5acaec) ;
+}
+.btn-cv-content{
+    padding-left: 10px;
+    padding-left: 10px;
+    
+}
+
+.btn-cv-content::before {
+    position: absolute;
+    content: "";
+    display: grid;
+    align-content: center;
+    
+    left: 0;
+    top: 0;
+    width: 30px;
+    height: 700px;
+    /* background: linear-gradient(0deg,#e4e4e471,#dbdbdb71) ; */
+    background: linear-gradient(0deg,#ffffff71,#fffefe71) ;
+    transform: translateX(25px) translateY(-450px) rotate(30deg);
+    transition: 0.6s ease-out;
+    z-index: 0;
+  }
+ 
+.btn-cv-content:hover::before {
+      transform: translateX(0px) rotate(30deg);
+}
+
+
+.prevv,.nextt{
+    width: 30px;
+}
+.prev polygon , .next polygon{
+    fill: #5a5a5a71;
+    transition: 0.2s ease-in-out;
+
+}
+
+.prev:hover .prevv polygon,.next:hover .nextt polygon{
+    fill: #3a8ad4;
+}
+
+

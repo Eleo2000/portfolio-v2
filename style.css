@@ -1,0 +1,150 @@
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+.container{
+    background-color:#ccc ;
+    padding: 10px;
+
+   
+    height: 1000px;
+    /* display: flex; */
+    /* flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    
+    align-content: flex-start; */
+
+
+    
+}
+
+.item{
+    background-color: grey;
+    /* padding: 40px;
+    margin: 10px;  */
+    color: #fff;
+    font-size: 40px;
+
+   
+}
+
+/*flex*/
+.i2{
+    /* height: 200px; */
+    /* flex-basis: 400px;
+    flex-shrink: 0; */
+    /* flex-grow: 2; */
+    /* flex: 0 0 300px; */
+    
+}
+
+/* .i3{
+     order:1;
+     flex: 1;
+} */
+
+/* .i4{
+     align-self: flex-end ; 
+    /order:-1; 
+}  */
+
+.item{
+    padding: 10px;
+    font-size: 30px;
+    color:white;
+    background-color: rgb(57, 13, 102);
+}
+
+/*grid train xD*/
+/* .container{
+    margin: 30px auto;
+    width: 1000px;
+
+    display: grid;
+    grid-template-rows: 75px 200px 400px 75px;
+    grid-template-columns: repeat(3, 1fr) 300px ;
+
+    
+    grid-gap: 25px;
+    
+}
+
+.i1{
+    background-color: orangered;
+    grid-column: 1/-1;
+}
+
+.i2{
+    background-color: aquamarine;
+}
+
+.i3{
+    background-color: greenyellow;
+}
+
+.i4{
+    background-color: goldenrod;
+}
+
+.i5{
+    background-color: gold;
+    grid-column: 4/-1;
+    grid-row: 2/span 2;
+}
+.i6{
+    background-color: blueviolet;
+    grid-column: 1/span 3;
+
+    grid-row: 3/ span 1;
+
+}
+.i7{
+    background-color: rgb(36, 10, 61);
+    grid-row: 4/-1;
+    grid-column: 1/-1;
+} */
+
+
+.container{
+    margin: 30px auto;
+    width: 1000px;
+
+    display: grid;
+    
+    
+    grid-gap: 25px;
+    
+    grid-auto-rows: 80px;
+    grid-auto-flow: row dense;
+    grid-auto-columns: .5fr;
+
+    /* align-items: center;
+    justify-items: center; */
+
+    grid-template-rows: repeat(2 , 150px);
+    grid-template-columns: repeat(2 , 200px);
+    height: 1000px;
+
+    justify-content: center; /*horizontal*/
+    align-content: center; /*vertical*/
+}
+
+.item--4{
+    background-color: crimson;
+    grid-row: 2/ span 3;
+    /* align-self: center;
+    justify-self: end; */
+}
+
+.item--7{
+    background-color: greenyellow;
+    grid-column: 1/ -1;
+}
+.item--6{
+    background-color: green;
+    grid-row: 2/ span 2;
+}

@@ -1,0 +1,73 @@
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+
+
+.item{
+    padding: 10px;
+    font-size: 30px;
+    color:white;
+    background-color: rgb(57, 13, 102);
+}
+
+
+
+.container{
+    background-color:#ccc ;
+    padding: 10px;
+
+   
+    height: 1000px;
+    margin: 30px auto;
+    width: 1000px;
+    display: grid;
+    /*width: 90%;*/
+    
+    /* grid-template-rows: repeat(2 , min-content);
+    grid-template-columns: max-content 1fr 1fr min-content;
+    
+    /*grid-template-rows: 150px min-content;*/
+    /*minmax function*/
+    /* grid-template-rows: repeat(2 , minmax(150px ,min-content));
+    grid-template-columns: minmax(115px , 1fr ) repeat(3 , 1fr); */ 
+
+    /*using auto-fill and auto-fit*/
+    grid-template-rows: repeat(2 , minmax(150px ,min-content));
+    grid-template-columns: repeat(auto-fill , 100px);
+    grid-template-columns: repeat(auto-fit , 100px);
+    width: 90%;
+    grid-template-columns: repeat(auto-fit , minmax(200px , 1fr));
+    grid-gap: 20px;
+    grid-auto-rows: 150px;
+}
+
+.item--1{
+    background-color: red;
+    /*align-self: center;
+    justify-self: center;*/
+}
+.item--2{
+    background-color: rgb(28, 88, 68); 
+}
+.item--3{
+    background-color: black;
+}
+
+.item--4{
+    background-color: violet;
+}
+.item--5{
+    background-color: tomato; 
+}
+.item--6{
+    background-color: yellowgreen;
+}
+.item--7{
+    background-color: goldenrod;
+}
+.item--8{
+    background-color: gold;
+}

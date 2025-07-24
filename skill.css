@@ -1,0 +1,93 @@
+#skill{
+    
+}
+
+/***radar****/
+.containera {
+    display: grid;
+    grid-template-columns:1fr 1fr;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    width: 100%;
+    height: auto;
+    align-items: center;
+  }
+  
+  .viewer, .skills {
+    flex: 1;
+    padding-top: 2rem;
+    box-sizing: border-box;
+  }
+  
+  .viewer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #threeCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  
+  .skills {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+  }
+  
+  .skills h2 {
+  margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #0ff;
+  }
+  
+  #radarChart {
+      height: 400px!important;
+    max-width: 400px;
+    width: 100%;
+    /* height: auto; */
+  }
+  
+
+  /**responsive**/
+
+  @media (max-width: 1280px) {
+    .containera {
+        grid-template-rows:max-content 1fr;
+        grid-template-columns:unset;
+        
+        justify-content: center;
+        align-items: center;
+    }
+
+    .skills {
+        display: grid;
+        justify-self: center;
+        justify-items: center;
+    }
+
+    .viewer, .skills {
+        padding-top: 0;
+    }
+
+    #threeCanvas {
+        width: auto;
+        height: 705px;
+        display: block;
+    }
+
+    #radarChart {
+       transform: scale(0.7);
+    }
+  }
+
+  @media (max-width: 1024px) {
+
+    #radarChart {
+       transform: scale(0.8);
+    }
+  }

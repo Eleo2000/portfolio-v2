@@ -1,0 +1,11 @@
+Model Information:
+* title:	Ekko From Arcane series Rigged
+* source:	https://sketchfab.com/3d-models/ekko-from-arcane-series-rigged-c84c1fd5fc9d4b7287130443e8b99d5f
+* author:	CVRxEarth (https://sketchfab.com/CVRxEarth)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Ekko From Arcane series Rigged" (https://sketchfab.com/3d-models/ekko-from-arcane-series-rigged-c84c1fd5fc9d4b7287130443e8b99d5f) by CVRxEarth (https://sketchfab.com/CVRxEarth) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

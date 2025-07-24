@@ -1,0 +1,20 @@
+#canvas1 {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    width: 45%;
+    z-index: -1;
+    border-radius: 100%;
+    opacity: 0.5;
+    animation: aaa 3s ease-in-out infinite 0.5s alternate;
+}
+
+
+@keyframes aaa {
+    0%{
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 1;
+    }
+}

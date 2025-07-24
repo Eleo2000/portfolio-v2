@@ -1,0 +1,242 @@
+/****mbola à modifier le linear gradient io*****/
+.footer{
+    grid-column: 1/-1;
+    padding-top: 3rem;
+    display: grid;
+    margin-top: 50px;
+    /*grid-template-columns: repeat(3, 1fr);*/
+    grid-template-columns: 1fr;
+    grid-template-rows: 10rem 7rem 4rem 1rem;
+    grid-column-gap: 6rem;
+    grid-row-gap: 1rem;
+    justify-items: center;/****X****/
+    align-items: center; /***Y***/
+    overflow: hidden;
+}
+
+
+
+
+.icon{
+
+    display: inline-block;
+    margin-left:2rem ;
+   margin-right: 2rem;
+   margin-bottom: 3rem;
+}
+.content-portfolio{
+    font-size: var(--text-detail);
+}
+
+.content-service{
+}
+.content-equipe{
+    font-size: 12px;
+    letter-spacing: 3px;
+}
+
+.type{
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 2px;
+    line-height: 20px;
+}
+
+.title-footer{
+    color: beige;
+    transform: translateY(30px);
+} 
+
+.contact-us-f{
+    align-self: center;
+}
+
+.titre-footer{
+    display: grid;
+    grid-template-columns: minmax(min-content);
+    grid-template-rows: repeat(2,1fr);
+    align-items: center;
+    justify-items: center;
+}
+
+.surligne{
+    width: 200px;
+    top: 0;
+    height: 5px;
+    background-color:#A4A2A2;
+    grid-row: 2/-1;
+    align-self: center;
+    justify-self: center;
+    transform: translateY(8px);
+    
+}
+
+.contact-us-f::after{
+    content: "";
+    position: absolute;
+    
+    width: 800px;
+    height: 500px;
+
+    border-radius: 100%;
+    background-color: rgb(44, 126, 202);
+    align-self: center;
+    justify-self: center;
+    transform: translateY(130px) translateX(330px);
+    filter: blur(100px);
+    opacity: 0.3;
+    
+}
+
+
+.icons-contact{
+    transform: scale(0.5)!important;
+    display: grid;
+    align-self: center;
+    justify-self: center;
+    grid-template-columns: repeat(3, 1fr)  ;
+    align-items: end;
+    transform: translateY(0px);
+}
+.copyright{
+    color: rgb(150, 150, 150);
+    font-size: var(--text-small);
+    align-self: end;
+    justify-self: center;
+    
+    transform: translateY(-10px);
+}
+
+.contact-us-f{
+    
+    position: relative;
+    letter-spacing: 4px;
+    font-weight: 600;
+    z-index: 10;
+    color: rgb(184, 184, 184);
+}
+/*****mbola à regler xD ********/
+/* .contact-us-f::before{
+    
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 12px;
+    background-color: #2aabf167;
+    transform: translateY(13px);
+    z-index: -4;
+} */
+
+
+.icon{
+    cursor: pointer;
+}
+
+.i-fb{
+    width: 30px;
+    height: 30px;
+}
+.i-in{
+    width: 30px;
+    height: 30px;
+}
+.i-g{
+    width: 30px;
+    height: 33x;
+}
+
+#facebook, #linkedin, #google{
+    fill: rgba(175, 174, 174, 0.514);
+    transition: 0.2s ease-in-out;
+    
+}
+
+.i-facebook:hover #facebook , .i-linkedin:hover #linkedin , .i-google:hover #google {
+    fill:#fff;
+}
+
+.icon::before{
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    align-items: center;
+    justify-items: center;
+    transform: translateX(-15px) translateY(-14px);
+    
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.26);
+    transition: 0.3s ease-in-out;
+}
+
+.icon:hover::before {
+    border: 2px solid rgba(95, 164, 255, 0.459);
+    background: linear-gradient(30deg,  #18ACFF -20.84%, rgba(0, 0, 0, 0.25) 40.85%);;
+}
+
+#fireflies-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .firefly {
+    position: absolute;
+    bottom: 0;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    opacity: 0;
+    transform: translate(0, 0) scale(0.8);
+    animation: floatUp 5s ease-out forwards;
+  }
+  
+  @keyframes floatUp {
+    0% {
+      opacity: 0;
+      transform: translate(0, 0) scale(0.8);
+    }
+    10% {
+      opacity: 1;
+    }
+    70% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0;
+      transform: translate(var(--x-move, 0px), -220px) scale(1.1);
+    }
+  }
+  
+
+@media screen and (max-width:501px) {
+    .title{
+        text-align: center;
+    }
+    .title.title-footer{
+        font-size: 11px;
+        letter-spacing: 3px;
+    }
+}
+
+.section{
+    margin-top:1rem ;
+    margin-bottom: 1.5rem;
+}
+.accueil{
+    padding-top: 4rem;
+
+}
+.footer{
+    padding-bottom:6rem;
+}
+
+.prev , .next{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
