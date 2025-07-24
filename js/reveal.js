@@ -6,15 +6,12 @@ var observer = new IntersectionObserver(function(entries){
         if(entry.intersectionRatio>0.3){
             //animation visible xD
             entry.target.classList.add("reveal-active");
-            console.log("visible xD");
             observer.unobserve(entry.target)
         }else{
             //animation invisible xD
-            console.log("invisible xD");
         }
     })
 
-    console.log(entries);
 },{
     threshold:[0.5]
 })
@@ -42,7 +39,6 @@ window.onload=() =>{
     if(wid <420){
         document.querySelector(".right").style.overflow="initial";
     }
-    console.log(wid);
 }
 
 

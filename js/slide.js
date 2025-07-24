@@ -76,14 +76,11 @@ v_max = nb_total - nb_affiche ;
 /****regler bug affichage overflow********/
 anim_suivant(0);
 
-console.log(nb_affiche);
-
 /**mbola misy bug ito xD bleme xD */
 window.addEventListener("resize" , ()=>{
    
     card_affichage();
     v_max = nb_total - nb_affiche ;
-    console.log("v_max",v_max);
 
     
     if(nb_g > v_max){
@@ -93,13 +90,8 @@ window.addEventListener("resize" , ()=>{
         distance = distance - d*13; 
         anim_suivant(distance);
         nb_g = nb_total - nb_affiche ;
-        console.log("amin boucle reset eto xD",i);
 
     }
-        
-    
-
-    console.log("nombre à gauche",nb_g);
 });
 
 next.addEventListener('click' , suivant);
@@ -111,7 +103,6 @@ function suivant(){
     card_affichage();
     nb_d = calc_nb_d(nb_g , nb_affiche , nb_total);
     v_max = nb_total - nb_affiche ;
-    console.log(v_max,"v maxxxxx");
     if( nb_g < v_max && nb_g>=0){
         //animation translation vers la gauche
         distance+=13;
@@ -119,7 +110,6 @@ function suivant(){
         
         nb_g += 1;
         nb_d -= 1;
-        console.log(nb_g,"nbg ioooooo");
         
     }
 }
@@ -136,6 +126,5 @@ function precedent(){
         anim_suivant(distance);
         nb_g -= 1;
         nb_d += 1;
-        console.log(nb_d);
     }
 }

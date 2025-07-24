@@ -73,7 +73,6 @@ projet.forEach((p,index_p) => {
         //attribution image ...here on prédéfini à l avance leurs noms selon value_change et rang card xD
         //amboarina xD
         video.src = `assets/video/${value_change}-video.mp4`;
-        console.log(video.src);
         for(var i=0 ; i< nb_t ; i++){
             
             photo[i].src = `assets/test/${value_change}-photo-${i}.png`;
@@ -120,14 +119,12 @@ projet.forEach((p,index_p) => {
         /****regle bug affichage overflow********/
         anim_next(0);
 
-        console.log(nb_a);
 
         /**mbola misy bug ito xD bleme xD */
         window.addEventListener("resize" , ()=>{
         
             card_portfolio_aff();
             v_max = nb_t - nb_a ;
-            console.log("v_max",v_max);
 
             
             if(nbg > v_max){
@@ -137,13 +134,8 @@ projet.forEach((p,index_p) => {
                 dist = dist - d*13; 
                 anim_next(dist);
                 nbg = nb_t - nb_a ;
-                console.log("amin boucle reset eto xD",i);
 
             }
-                
-            
-
-            console.log("nombre à gauche",nbg);
         });
 
         nexta.addEventListener('click' , suivante);
@@ -174,7 +166,6 @@ projet.forEach((p,index_p) => {
                 
                 init_affichage(nb_active);
 
-                console.log( el.dataset.rate);
             }
         });
 
@@ -211,7 +202,6 @@ projet.forEach((p,index_p) => {
             card_portfolio_aff();
             nbd = calc_nbd(nbg , nb_a , nb_t);
             v_max = nb_t - nb_a ;
-            console.log(nbg);
             if( nbg < v_max && nbg>=0){
                 //animation translation vers la gauche
                 dist+=13;
@@ -219,9 +209,7 @@ projet.forEach((p,index_p) => {
                 
                 nbg += 1;
                 nbd -= 1;
-                nbd == 0 ? console.log("nbd = 0") : console.log("nbd !=0");
                 // console.log(nbg);
-                console.log(nbd);
             }
         }
 
@@ -267,9 +255,7 @@ projet.forEach((p,index_p) => {
                 anim_next(dist);
                 nbg -= 1;
                 nbd += 1;
-                nbg == 0 ? console.log("nbg = 0") : console.log("nbg !=0");
                 // console.log(nbd);
-                console.log(nbg);
             }
         }
 
