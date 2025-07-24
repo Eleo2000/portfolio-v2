@@ -496,8 +496,8 @@ loader.load(
       });
     }
   },
-  (xhr) => console.log(`Progression : ${(xhr.loaded / xhr.total * 100).toFixed(1)}%`),
-  (error) => console.error('Erreur de chargement :', error)
+  // (xhr) => console.log(`Progression : ${(xhr.loaded / xhr.total * 100).toFixed(1)}%`),
+  // (error) => console.error('Erreur de chargement :', error)
 );
 
 const clock = new THREE.Clock(); // ← Manquait

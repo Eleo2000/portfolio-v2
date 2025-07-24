@@ -36,8 +36,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 model.position.set(0, initialY, 0);
                 scene.add(model);
             },
-            xhr => console.log(`Chargement ${containerId}: ${(xhr.loaded / xhr.total * 100).toFixed(1)}%`),
-            err => console.error(`Erreur GLTF ${containerId}:`, err)
+            // xhr => console.log(`Chargement ${containerId}: ${(xhr.loaded / xhr.total * 100).toFixed(1)}%`),
+            // err => console.error(`Erreur GLTF ${containerId}:`, err)
         );
 
         // Clock for animation timing

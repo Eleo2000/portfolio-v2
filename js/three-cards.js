@@ -260,11 +260,11 @@ canvas.addEventListener('mousemove', e => {
   mouse.y = -((e.clientY - r.top) / r.height) * 2 + 1;
   ray.setFromCamera(mouse, camera);
 
-  // Debug (facultatif)
-  console.log('Cards:', cards.map(c => ({
-    uniforms: c.userData.uniforms,
-    hasAmp: !!c.userData.uniforms?.amp
-  })));
+  // // Debug (facultatif)
+  // console.log('Cards:', cards.map(c => ({
+  //   uniforms: c.userData.uniforms,
+  //   hasAmp: !!c.userData.uniforms?.amp
+  // })));
 
   // Raycast (inclure enfants)
   const hits = ray.intersectObjects(cards, true);
