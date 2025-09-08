@@ -11,7 +11,7 @@ nav .panel {
 	width: calc(50% - 60px);
 	position: absolute;
 	top: 20px;
-	background-color: rgb(53, 53, 53);
+	background-color: rgba(53, 53, 53, 0);
 	transition: width .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 nav .panel:after {
@@ -62,7 +62,7 @@ nav #menu_btn:after {
 	width: 0;
 	border-left: 50px solid transparent;
 	border-right: 50px solid transparent;
-	border-bottom: 86.60254px solid rgb(102, 102, 102);
+	border-bottom: 86.60254px solid rgb(163, 163, 163);
 	top: 6px;
 	left: 0;
 }

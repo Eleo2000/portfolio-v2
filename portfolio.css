@@ -64,7 +64,8 @@ span{
     margin-left: auto;
     margin-right: auto;
     display: grid;
-    place-items: center;
+    justify-items: center;
+    align-items: center;
 }
 
 .image-projet img{
@@ -171,7 +172,8 @@ span{
 /******responsive xD*******/
 @media screen and (max-width:750px){
     .image-projet{
-        display: none;
+        /* display: none; */
+        width: 15rem;
     }
     .projet{
         display: grid;

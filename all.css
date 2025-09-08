@@ -191,14 +191,15 @@
 }
 
 .logo{
-  position: absolute;
-  top: 0rem;
-  left: 2rem;
-  z-index: 10;
+    position: absolute;
+    top: 0rem;
+    left: 2rem;
+    z-index: 10;
 }
 
 .logo img{
     width: 72px;
+    margin-top: 1rem;
 }
 
 .logo ,.svg-menu{
