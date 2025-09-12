@@ -530,7 +530,7 @@ new Chart(ctx, {
     labels: ['Angular', 'Symfony', 'threeJs', 'UX/UI', 'English', 'SQL'],
     datasets: [{
       label: "Eleo's Skills",
-      data: [90, 80, 75, 85, 80, 80],
+      data: [90, 75, 85, 85, 80, 80],
       backgroundColor: 'rgba(0, 255, 255, 0.15)',
       borderColor: '#0ff',
       borderWidth: 3,
