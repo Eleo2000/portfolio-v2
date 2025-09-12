@@ -8,6 +8,17 @@
     z-index: 51;
     transition: 0.25s ease-in-out;
 }
+
+.contact_form img{
+    width: 24px;
+    height: auto;
+}
+
+.contact_form p{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
 form{
     font-size: 14px;
     top:-30px;
@@ -17,7 +28,7 @@ form{
     grid-row: 1/-1;
     border: 1px solid rgb(61, 61, 61);
     max-width: 550px;
-    width: 80%;
+    width: 90%;
     background: rgba(0, 0, 0, 0.192);
     backdrop-filter: blur(50px);
     padding: 30px;
@@ -28,6 +39,8 @@ form{
 
 form img{
     border-radius: 1rem;
+    display: grid;
+    justify-self: center;
 }
 
 form a , form p{

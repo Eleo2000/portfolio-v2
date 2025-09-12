@@ -810,3 +810,12 @@ height: 30px;
   text-align: center;
   width: fit-content;
 }
+
+
+
+  
+  canvas#webgl {
+  touch-action: pan-y!important; /* ✅ autorise le scroll vertical */
+  -webkit-user-select: none!important;
+  user-select: none!important;
+}

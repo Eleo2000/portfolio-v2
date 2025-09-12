@@ -37,6 +37,7 @@
     align-items: center;
     justify-content: center;
     width: max-content;
+    gap: 1rem;
   }
   
   .skills h2 {
@@ -73,6 +74,7 @@
     .viewer, .skills {
         padding-top: 0;
     }
+    
 
     #threeCanvas {
         width: auto;
@@ -86,6 +88,11 @@
   }
 
   @media (max-width: 1024px) {
+    #threeCanvas {
+      width: auto;
+      height: 400px;
+      display: block;
+  }
 
     #radarChart {
        transform: scale(0.8);

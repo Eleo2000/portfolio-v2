@@ -94,13 +94,38 @@ const frag = `
 
 // Card data
 const data = [
-  {title:'The Red Shalk 2023',desc:'Félicitations à EVOLUTECH pour leur victoire et collaboration avec Carnet de Mode.mg ! 👏 Ce hackathon des 10-12 novembre 2023 visait à booster l’entrepreneuriat féminin et créer des emplois jeunes grâce au digital.', image: 'assets/cards3d/exp/p4h-23.jpg'},
-  {title:'Ideathon 2023',desc:'Evolutech remporte le 1er prix de l’Ideathon 2023 ! Grâce à l’engagement et à la créativité de toute l’équipe, nous avons brillamment décroché la première place. Merci à tous pour votre soutien ! Prochain arrêt : IndabaX Madagascar. 🚀✨', image: 'assets/cards3d/exp/ideatho-23.jpg'},
-  {title:'JNR 2023',desc:'Journées de la Recherche Fianarantsoa, mai 2023,nous avons été partenaires lors de cet événement en contribuant au design et au développement d’une application de recensement utilisateur.', image: 'assets/cards3d/exp/jnr-23.jpg'},
-  {title:'Emihack 2023',desc:'Une nouvelle performance marquante lors de l’édition 2023 du hackathon inter-classes Emihack, organisé à l’EMIT Fianarantsoa, où nous avons à nouveau décroché la deuxième place.', image: 'assets/cards3d/exp/emihack-23.jpg'},
-  {title:'Frontend Award 2022',desc:'Nous avons décroché la deuxième place au Frontend Award 2022, un concours national organisé par TechZara. Ce défi nous a permis de mettre en avant notre créativité et nos compétences en développement web.', image: 'assets/cards3d/exp/FA-22.jpg'},
-  {title:'Emihack 2022',desc:'Nous avons fièrement terminé à la deuxième place lors du hackathon inter-classes Emihack 2022, organisé au sein de l’EMIT Fianarantsoa. Une belle expérience de collaboration, d’innovation et de dépassement collectif.', image: 'assets/cards3d/exp/emihack-22.jpg'},
+  {
+    title: 'The Red Shalk 2023',
+    desc: 'Congratulations to EVOLUTECH for their victory and collaboration with Carnet de Mode.mg! 👏 This hackathon from November 10-12, 2023 aimed to boost female entrepreneurship and create youth jobs through digital innovation.',
+    image: 'assets/cards3d/exp/p4h-23.jpg'
+  },
+  {
+    title: 'Ideathon 2023',
+    desc: 'Evolutech wins 1st prize at Ideathon 2023! Thanks to the commitment and creativity of the whole team, we brilliantly secured first place. Thank you all for your support! Next stop: IndabaX Madagascar. 🚀✨',
+    image: 'assets/cards3d/exp/ideatho-23.jpg'
+  },
+  {
+    title: 'JNR 2023',
+    desc: 'Fianarantsoa Research Days, May 2023, we partnered in this event by contributing to the design and development of a user survey application.',
+    image: 'assets/cards3d/exp/jnr-23.jpg'
+  },
+  {
+    title: 'Emihack 2023',
+    desc: 'Another remarkable performance at the 2023 edition of the Emihack inter-class hackathon, held at EMIT Fianarantsoa, where we again secured second place.',
+    image: 'assets/cards3d/exp/emihack-23.jpg'
+  },
+  {
+    title: 'Frontend Award 2022',
+    desc: 'We took second place at the Frontend Award 2022, a national contest organized by TechZara. This challenge allowed us to showcase our creativity and web development skills.',
+    image: 'assets/cards3d/exp/FA-22.jpg'
+  },
+  {
+    title: 'Emihack 2022',
+    desc: 'We proudly finished in second place at the Emihack 2022 inter-class hackathon, organized at EMIT Fianarantsoa. A great experience of collaboration, innovation, and collective surpassing.',
+    image: 'assets/cards3d/exp/emihack-22.jpg'
+  },
 ];
+
 
 // Create cards
 const cards = [];
