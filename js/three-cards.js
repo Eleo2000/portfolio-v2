@@ -34,7 +34,7 @@ scene.add(mainGroup);
 
 // Load GLTF model at center
 let gltfModel;
-new GLTFLoader().load('assets/3d/ekko_from_arcane/scene.gltf', gltf => {
+new GLTFLoader().load('assets/3d/ekko_from_arcane_series_rigged.glb', gltf => {
   gltf.scene.scale.set(1, 1, 1);
   gltf.scene.position.set(0, -3.5, 0);
   mainGroup.add(gltf.scene);

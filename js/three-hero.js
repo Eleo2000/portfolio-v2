@@ -78,6 +78,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     // Crée les deux scènes avec leurs modèles
-    createScene('threejs-container', 'assets/3d/cyberpunk_laptop/scene.gltf');
+    createScene('threejs-container', 'assets/3d/cyberpunk_laptop.glb');
     createScene('threejs-container-2', 'assets/3d/footer/scene.gltf', 1, 1);
 });
