@@ -434,7 +434,7 @@ const camera = new THREE.PerspectiveCamera(
   0.01,                             // near
   100                               // far
 );
-camera.position.set(0, 2, 5);
+camera.position.set(0, 2, 10);
 
 const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('threeCanvas'), alpha: true });
 // renderer.setSize(window.innerWidth / 2, window.innerHeight);
@@ -464,7 +464,7 @@ scene.add(directionalLight);
 // Load 3D model
 const loader = new GLTFLoader();
 loader.load(
-  'assets/3d/broken_steampunk_clock/scene.gltf',  // ← Chemin vers ton modèle
+  'assets/3d/birch_tree_-_low_poly.glb', 
   (gltf) => {
     const model = gltf.scene;
 
@@ -482,7 +482,9 @@ loader.load(
     box.setFromObject(model);
     const center = box.getCenter(new THREE.Vector3());
     model.position.sub(center);
-    model.position.y = 2.4;
+    // model.position.y = 2.4;
+    model.position.set(0, 0, 0);
+    model.scale.setScalar(0.0052); // pour tester
 
     scene.add(model);
 
@@ -493,6 +495,7 @@ loader.load(
         const action = mixer.clipAction(clip);
         action.setLoop(THREE.LoopRepeat);
         action.play();
+        action.timeScale = 3; // x plus rapide
       });
     }
   },
