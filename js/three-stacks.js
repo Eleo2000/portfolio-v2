@@ -530,10 +530,10 @@ const ctx = document.getElementById('radarChart').getContext('2d');
 new Chart(ctx, {
   type: 'radar',
   data: {
-    labels: ['Angular', 'Symfony', 'threeJs', 'UX/UI', 'English', 'SQL'],
+    labels: ['Html/CSS', 'Symfony', 'threeJs', 'UX/UI', 'Angular', 'SQL'],
     datasets: [{
       label: "Eleo's Skills",
-      data: [90, 75, 85, 85, 80, 80],
+      data: [95, 75, 85, 90, 80, 80],
       backgroundColor: 'rgba(0, 255, 255, 0.15)',
       borderColor: '#0ff',
       borderWidth: 3,

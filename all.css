@@ -596,7 +596,7 @@ height: 30px;
 
 #aurora {
     position: absolute;
-    top: 0;
+    top: -15%;
     left: 0;
     width: 100vw;
     height: 100vh;

@@ -173,7 +173,6 @@
 @media screen and (max-width:420px){
     .right{
         margin-top: 0rem;
-        transform: scale(0.7) ;
         overflow: visible;
     }
 

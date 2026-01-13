@@ -34,7 +34,7 @@ scene.add(mainGroup);
 
 // Load GLTF model at center
 let gltfModel;
-new GLTFLoader().load('assets/3d/ekko_from_arcane_series_rigged.glb', gltf => {
+new GLTFLoader().load('assets/3d/space_exploration_wlp_series_8/scene.gltf', gltf => {
   gltf.scene.scale.set(1, 1, 1);
   gltf.scene.position.set(0, -3.5, 0);
   mainGroup.add(gltf.scene);
@@ -254,8 +254,8 @@ function updateCards() {
   });
   if (gltfModel) {
     const progress = Math.min(scr.v / (4 * Math.PI), 1);
-    gltfModel.scale.setScalar(0.03 + progress * 1);
-    gltfModel.position.y = -3.5 + progress * 3;
+    gltfModel.scale.setScalar(0.001 + progress * 0.4);
+    gltfModel.position.y = -3.5 + progress * 10;
   }
   // Move all objects slightly higher
   mainGroup.position.y = -1.5;
