@@ -20,6 +20,7 @@
     align-items: center;
 }
 form{
+    display: grid;
     font-size: 14px;
     top:-30px;
     position: fixed;
