@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio de Eleo Antroine TAHINDRAZA, développeur Full Stack JavaScript, Three.js et UI/UX design.">
+    <meta name="keywords" content="Eleo Tahindraza, développeur Madagascar, React, Three.js, JavaScript, portfolio">
+    <meta name="author" content="Eleo Antroine TAHINDRAZA">
     <link rel="stylesheet" href="all.css">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="accueil.css">
@@ -294,7 +297,11 @@
                         </svg>
                 </div>
             </div>
-            <div class="copyright">&copy; Eleo Antroine TAHINDRAZA - 2026</div>
+            <div class="copyright" id="copyright"></div>
+            <script>
+                document.getElementById('copyright').innerHTML =
+                `&copy; Eleo Antroine TAHINDRAZA - ${new Date().getFullYear()}`;
+            </script>
         </div>
     </div>
 
