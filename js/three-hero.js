@@ -3,6 +3,9 @@ import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/
 
 window.addEventListener('DOMContentLoaded', () => {
 
+  /* ================================
+     CAMERA FIT
+  ================================= */
   function fitCameraToObject(camera, object, offset = 1.2) {
     const box = new THREE.Box3().setFromObject(object);
     const size = box.getSize(new THREE.Vector3());
@@ -12,37 +15,49 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const maxDim = Math.max(size.x, size.y, size.z);
     const fov = camera.fov * (Math.PI / 180);
-    let cameraZ = Math.abs(maxDim / Math.sin(fov / 2));
+    let cameraZ = Math.abs(maxDim / Math.tan(fov / 2));
 
     cameraZ *= offset;
-    camera.position.z = cameraZ;
+    camera.position.set(0, 1, cameraZ);
 
     camera.near = maxDim / 100;
     camera.far = maxDim * 100;
     camera.updateProjectionMatrix();
   }
 
-  function createScene(containerId, modelPath, initialY = 0.4) {
+  /* ================================
+     CREATE SCENE
+  ================================= */
+  function createScene(containerId, modelPath) {
     const container = document.getElementById(containerId);
 
+    /* ---------- RENDERER ---------- */
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true
     });
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(
+      window.innerWidth < 768 ? 1 : Math.min(window.devicePixelRatio, 2)
+    );
+
     container.appendChild(renderer.domElement);
 
+    /* ---------- SCENE ---------- */
     const scene = new THREE.Scene();
 
+    /* ---------- CAMERA ---------- */
     const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
-    camera.position.set(0, 2, 10);
+    camera.position.set(0, 0, 10);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-    const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    /* ---------- LIGHTS ---------- */
+    scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
     dirLight.position.set(5, 10, 7.5);
     scene.add(dirLight);
 
+    /* ---------- MODEL ---------- */
     const loader = new GLTFLoader();
     let model = null;
     let mixer = null;
@@ -54,7 +69,7 @@ window.addEventListener('DOMContentLoaded', () => {
       fitCameraToObject(
         camera,
         model,
-        window.innerWidth < 768 ? 1 : .94
+        container.clientWidth < 768 ? 1.15 : 0.95
       );
 
       if (gltf.animations.length) {
@@ -69,22 +84,45 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    const clock = new THREE.Clock();
-
+    /* ---------- RESIZE ---------- */
     function resize() {
       const width = container.clientWidth;
       const height = container.clientHeight;
+
+      if (!width || !height) return;
+
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
+
+      renderer.setPixelRatio(
+        width < 768 ? 1 : Math.min(window.devicePixelRatio, 2)
+      );
+
+      if (model) {
+        fitCameraToObject(
+          camera,
+          model,
+          width < 768 ? 1.15 : 0.95
+        );
+      }
     }
 
-    resize();
-    window.addEventListener('resize', resize);
+    /* ---------- RESIZE OBSERVER ---------- */
+    let resizeRAF = null;
+    const resizeObserver = new ResizeObserver(() => {
+      if (resizeRAF) return;
+      resizeRAF = requestAnimationFrame(() => {
+        resize();
+        resizeRAF = null;
+      });
+    });
 
-    setTimeout(() => {
-      window.dispatchEvent(new Event('resize'));
-    }, 300);
+    resizeObserver.observe(container);
+    resize();
+
+    /* ---------- ANIMATION ---------- */
+    const clock = new THREE.Clock();
 
     function animate() {
       requestAnimationFrame(animate);
@@ -107,6 +145,10 @@ window.addEventListener('DOMContentLoaded', () => {
     animate();
   }
 
+  /* ================================
+     INIT SCENES
+  ================================= */
   createScene('threejs-container', 'assets/3d/laptop.glb');
-  createScene('threejs-container-2', 'assets/3d/footer/scene.gltf', 1);
+  createScene('threejs-container-2', 'assets/3d/footer/scene.gltf');
+
 });
