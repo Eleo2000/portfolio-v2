@@ -4,7 +4,8 @@ nav.navy {
 	left: 0;
 	width: 100vw;
 	height: 100px;
-  z-index: 100;
+  	z-index: 100;
+	pointer-events: none;
 }
 nav .panel {
 	height: 60px;
@@ -41,6 +42,7 @@ nav .panel.panel-right:after {
 }
 
 nav #menu_btn {
+	pointer-events: all;
 	background: none;
 	border: 0;
 	position: absolute;

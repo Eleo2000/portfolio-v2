@@ -208,10 +208,9 @@
 .right::before{
     content: "";
     position: absolute;
-    
+    pointer-events: none;
     width: 370px;
     height: 398px;
-
     border-radius: 100%;
     background-color: var(--c-right);
     align-self: center;
