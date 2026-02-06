@@ -70,6 +70,7 @@ nav #menu_btn:after {
 }
 
 nav #menu {
+	pointer-events: all;
 	position: absolute;
 	bottom: calc(100% + 50px);
 	left: calc(50% - 75px);
