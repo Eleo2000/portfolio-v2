@@ -216,7 +216,7 @@ data.forEach((d, i) => {
   };
 });
 
-function createTextLabel(text, color = '#5acaec') {
+function createTextLabel(text, color = '#7fc8ff') {
   const canvas = document.createElement('canvas');
   canvas.width = 512;
   canvas.height = 128;
@@ -226,7 +226,7 @@ function createTextLabel(text, color = '#5acaec') {
   ctx.font = 'bold 48px Arial';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillStyle = 'rgba(0, 20, 40, 0.55)';
+  ctx.fillStyle = 'rgba(0, 20, 40, 0.4)';
   ctx.fillText(text, 258, 66); // Ombre décalée
 
   ctx.fillStyle = color;

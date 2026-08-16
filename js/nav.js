@@ -1,11 +1,11 @@
-var section = document.querySelectorAll(".section");
+var sections = document.querySelectorAll(".section");
 var menu = document.querySelectorAll(".menu a");
 var ico = document.querySelectorAll(".round a");
 /***pour identifier si on est déjà dans la section projet */
 var projects;
 
     window.onscroll = () => {
-    section.forEach((i) => {
+    sections.forEach((i) => {
         var top = window.scrollY;
         var offset = i.offsetTop - 300;
         var height = i.offsetHeight;
