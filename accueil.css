@@ -16,6 +16,10 @@
     overflow-x: hidden;
     
 }
+.logo:hover{
+    transition:.25s;
+    filter: brightness(0.8);
+}
 
 .title-evolutech{
     
