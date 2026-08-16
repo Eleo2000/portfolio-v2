@@ -36,7 +36,7 @@
 .left{
     margin-left: 2rem;
     display: grid;
-    grid-template-rows: 1fr min-content min-content 5rem;
+    grid-template-rows: min-content 1fr min-content 5rem;
     grid-row-gap: 1rem;
     align-self: center;
     justify-self: center;
@@ -44,9 +44,35 @@
 }
 
 
-.left--hero-img{
-    width: 77%;
+.hero-card {
+    width: 80%;
+    max-width: 360px;
+    object-fit: cover;
+    object-position: top center;
     pointer-events: none;
+}
+
+.left--hero-img{
+    width: 85%;
+    max-width: 360px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.hero-intro {
+    text-align: center;
+    z-index: 2;
+    max-width: 90%;
+}
+
+.hero-desc {
+    font-family: 'League Spartan', sans-serif;
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    line-height: 1.4;
+    color: rgba(245, 245, 220, 0.9);
+    margin: 0;
 }
 
 
@@ -60,6 +86,22 @@
     width: 30rem;
     height: 30rem;
     overflow: hidden;
+}
+
+/* Hero 3D container : prend toute la largeur disponible */
+#threejs-container {
+    width: 100%;
+    max-width: 50rem;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    grid-template-rows: 1fr;
+}
+
+#threejs-container canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 .demi-ligne{
@@ -184,6 +226,12 @@
         width: 17rem;
     }
    
+}
+
+@media screen and (max-width: 768px){
+    #threejs-container {
+        aspect-ratio: 16 / 9;
+    }
 }
 
 

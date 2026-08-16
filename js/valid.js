@@ -3,6 +3,7 @@ let form = document.querySelector(".contact_form");
 let backXd = document.querySelector('.backXd');
 let menu_burger = document.querySelector('.menu-burger');
 let header = document.querySelector(".header");
+let navy = document.querySelector(".navy");
 
 let is_howModalMail = false;
 
@@ -13,10 +14,12 @@ let other = false;
 function back(){
     form.style.display = "none";
     blur.style.zIndex="42";
-    blur.classList.toggle('blur-active');
+    blur.classList.remove('blur-active');
     section.forEach((e) =>{
         e.classList.remove("activa");
     })
+    document.body.style.overflowY = "initial";
+    navy.style.display = "initial"
     
     // header.style.filter = "blur(0)";
     is_howModalMail = false
@@ -30,10 +33,12 @@ function show(){
     other=true;
     form.style.display = "grid";
     blur.style.zIndex="50";
-    blur.classList.toggle('blur-active');
+    blur.classList.add('blur-active');
     section.forEach((e) =>{
         e.classList.add("activa");
     })
+    document.body.style.overflow = "hidden";
+    navy.style.display = "none"
     
     // header.style.filter = "blur(7px)";
 }

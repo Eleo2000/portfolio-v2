@@ -6,6 +6,8 @@ canvas.width = window.innerWidth ;
 canvas.height = window.innerHeight;
 
 let particlesArray;
+let isVisible = true;
+let rafId = null;
 
 //get mouse position
 let mouse = {
@@ -13,6 +15,17 @@ let mouse = {
     y : null,
     radius : (canvas.height/80)*(canvas.width/80)
 }
+
+// Pause quand onglet caché
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        isVisible = false;
+        if (rafId) cancelAnimationFrame(rafId);
+    } else {
+        isVisible = true;
+        if (!rafId) animate();
+    }
+});
 
 // window.addEventListener("mousemove" , 
 //     function(e){
@@ -88,13 +101,15 @@ class Particle {
 //create particle array
 function init(){
     particlesArray = [];
-    let nbParticles = (canvas.height * canvas.width)/14000;
-    for(let i =0; i< nbParticles ; i++){
-        let size = (Math.random() * 3.5) +1;
+    // Limite le nombre de particules pour éviter O(n²) trop lourd
+    const area = canvas.width * canvas.height;
+    const targetParticles = Math.min(100, Math.floor(area / 18000));
+    for(let i =0; i< targetParticles ; i++){
+        let size = (Math.random() * 2) + 0.8;
         let x = (Math.random() * ((innerWidth - size * 2) - (size *2)) + size * 2);
         let y = (Math.random() * ((innerHeight - size * 2) - (size *2)) + size * 2);
-        let directionX = (Math.random() * 5) - 2.5;
-        let directionY = (Math.random() * 5) - 2.5;
+        let directionX = (Math.random() * 4) - 2;
+        let directionY = (Math.random() * 4) - 2;
         let color = '#5082a0';
 
         particlesArray.push(new Particle(x , y , directionX , directionY , size , color));
@@ -106,8 +121,9 @@ function init(){
 
 //animation loop
 function animate(){
-    requestAnimationFrame(animate);
-    ctx.clearRect(0,0,innerWidth,innerHeight);
+    rafId = requestAnimationFrame(animate);
+    if (!isVisible) return;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
     for(let i =0 ; i < particlesArray.length ; i++){
         particlesArray[i].update();
@@ -117,18 +133,20 @@ function animate(){
 
 //check if particles are close enough to draw line between them
 function connect(){
-    let opacity_value = 1 ;
-    for (let a =0 ; a< particlesArray.length ; a++){
-        for(let b = a ; b< particlesArray.length ; b++){
-            let d = ((particlesArray[a].x - particlesArray[b].x)
-            * (particlesArray[a].x - particlesArray[b].x))
-            +((particlesArray[a].y - particlesArray[b].y) 
-            * (particlesArray[a].y - particlesArray[b].y));
+    // Réduction du rayon de connexion : moins de calculs et moins de lignes
+    const maxDist = Math.min(canvas.width, canvas.height) / 8;
+    const maxDistSq = maxDist * maxDist;
 
-            if(d <(canvas.width/7) * (canvas.height/7)){
-                opacity_value = 0.5 - (d /20000);
+    for (let a =0 ; a< particlesArray.length ; a++){
+        for(let b = a + 1 ; b < particlesArray.length ; b++){
+            const dx = particlesArray[a].x - particlesArray[b].x;
+            const dy = particlesArray[a].y - particlesArray[b].y;
+            const d = dx*dx + dy*dy;
+
+            if(d < maxDistSq){
+                const opacity_value = Math.max(0, 0.45 - (d / (maxDistSq * 1.5)));
                 ctx.strokeStyle = 'rgba(255,255,255,'+opacity_value+')' ;
-                lineWidth = 1 ;
+                ctx.lineWidth = 1 ;
                 ctx.beginPath();
                 ctx.moveTo(particlesArray[a].x , particlesArray[a].y);
                 ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
@@ -141,11 +159,15 @@ function connect(){
 //event mouse not moving after 0.3s xD
 
 //event resize
+let resizeTimeout;
 window.addEventListener('resize', () =>{
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-    mouse.radius = ((canvas.height/50) * (canvas.height/50));
-    init();
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+        mouse.radius = ((canvas.height/50) * (canvas.height/50));
+        init();
+    }, 150);
 })
 
 //mouse out event

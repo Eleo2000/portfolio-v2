@@ -352,33 +352,106 @@ canvas.addEventListener('mousemove', e => {
 });
 
 // Click overlay
+const cardOverlay = document.getElementById('cardFullscreen');
+const cardImage = document.getElementById('cardImage');
+const cardTitle = document.getElementById('cardTitle');
+const cardDesc = document.getElementById('cardDesc');
+const cardLoader = cardOverlay.querySelector('.card-loader');
+
 canvas.addEventListener('click', () => {
   ray.setFromCamera(mouse, camera);
   const hits = ray.intersectObjects(cards);
   if (hits.length) {
     const { title, desc, image } = hits[0].object.userData;
-    const o = document.querySelector('.card-fullscreen');
-    o.querySelector('h2').textContent = title;
-    o.querySelector('p').textContent = desc;
-    o.classList.add('visible');
 
-    // 💡 Ici on ajoute l'image dans le tag <img>
-    o.querySelector('img').src = image;
+    // Mise à jour du texte
+    cardTitle.textContent = title || '';
+    cardDesc.textContent = desc || '';
+    cardOverlay.classList.add('visible');
+    document.body.style.overflow = "hidden";
 
+    // Reset propre : pas d'image résiduelle
+    cardImage.classList.add('is-loading');
+    cardImage.src = '';
+    cardImage.alt = title || '';
+    cardLoader.classList.add('is-active');
+
+    // Chargement de la nouvelle image
+    const img = new Image();
+    img.onload = img.onerror = () => {
+      cardImage.src = image;
+      cardImage.classList.remove('is-loading');
+      cardLoader.classList.remove('is-active');
+      if (!img.width) {
+        cardDesc.textContent = (desc || '') + '\n\n[Image non disponible]';
+      }
+    };
+    img.src = image;
+
+    // Si l'image est déjà en cache, onload aurait pu déjà s'exécuter avant l'assignation
+    if (img.complete) {
+      cardImage.src = image;
+      cardImage.classList.remove('is-loading');
+      cardLoader.classList.remove('is-active');
+    }
   }
 });
 
 // Close overlay
 const closeBtn = document.getElementById('closeCard');
-closeBtn.addEventListener('click', () => document.querySelector('.card-fullscreen').classList.remove('visible'));
+closeBtn.addEventListener('click', () => {
+  cardOverlay.classList.remove('visible');
+  // Nettoyage pour éviter tout résidu
+  cardImage.src = '';
+  cardImage.classList.add('is-loading');
+  cardLoader.classList.add('is-active');
+  document.body.style.overflowY = "initial";
+});
+
+// Fermer avec Echap
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && cardOverlay.classList.contains('visible')) {
+    cardOverlay.classList.remove('visible');
+    cardImage.src = '';
+    cardImage.classList.add('is-loading');
+    cardLoader.classList.add('is-active');
+  }
+});
 
 //conf 
 camera.rotateX(-100.5)
 scene.rotateY(180)
 
 // Animate
+let isVisible = true;
+let isInViewport = true;
+let rafId;
+
+const scrollSection = document.querySelector('.scroll-section');
+
+// Pause quand l'onglet est caché
+document.addEventListener('visibilitychange', () => {
+  isVisible = !document.hidden;
+  if (isVisible && isInViewport && !rafId) animate();
+});
+
+// Pause quand la section n'est pas dans le viewport
+if (scrollSection) {
+  const visObserver = new IntersectionObserver(([entry]) => {
+    isInViewport = entry.isIntersecting;
+    if (isInViewport && isVisible && !rafId) animate();
+  }, { threshold: 0.05 });
+  visObserver.observe(scrollSection);
+}
+
 function animate(t=0) {
-  requestAnimationFrame(animate);
+  rafId = requestAnimationFrame(animate);
+
+  if (!isVisible || !isInViewport) {
+    rafId = null;
+    return;
+  }
+
   theta = scr.v;
   updateCards();
   cards.forEach(c => {
@@ -392,10 +465,15 @@ function animate(t=0) {
 animate();
 
 // Resize
+let resizeTimeout;
 window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth/window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    adjustCameraFov();
+  }, 100);
 });
 
 function adjustCameraFov() {

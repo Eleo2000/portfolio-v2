@@ -45,7 +45,7 @@
     box-sizing: border-box;
     scroll-behavior: smooth;
     user-select: none;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'League Spartan', sans-serif;
   }
   
   body {
@@ -569,19 +569,19 @@ height: 30px;
 }
 
 
-.text-cyan, button {
+/* .text-cyan, button {
     font-family: 'Orbitron', sans-serif!important;
     text-shadow:
       0 0 5px #0ff,
       0 0 10px #0ff,
       0 0 20px #0ff,
       0 0 40px #0ff;
-}
+} */
 
 
   
 .text-normal , a , a::before{
-    font-family: 'Orbitron', sans-serif!important;
+    font-family: 'League Spartan', sans-serif!important;
 }
 
 #starfield {
@@ -637,12 +637,8 @@ height: 30px;
     pointer-events: all;
   }
   .card-fullscreen img {
-    max-width: 80%;
     max-height: 60vh;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    margin-bottom: 30px;
-    border: 2px solid #ff8a00;
   }
   .card-fullscreen h2 {
     font-size: 2.5rem;
@@ -659,9 +655,9 @@ height: 30px;
     line-height: 1.6;
   }
   #closeCard {
-    padding: 12px 35px;
+    padding: 3px 6px;
     font-size: 1rem;
-    background: linear-gradient(90deg, #ff8a00, #da1b60);
+    background: rgba(82, 82, 82, 0.521);
     border: none;
     border-radius: 50px;
     color: white;
@@ -669,16 +665,10 @@ height: 30px;
     font-weight: bold;
     letter-spacing: 1px;
     transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 5px 15px rgba(218, 27, 96, 0.4);
-  }
-  #closeCard:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(218, 27, 96, 0.6);
   }
   @media (max-width: 768px) {
     .card-fullscreen h2 { font-size: 1.8rem; }
     .card-fullscreen p { font-size: 1rem; max-width: 90%; }
-    #closeCard { padding: 10px 25px; }
   }
   #sceneContainer {
     position: relative;
@@ -713,7 +703,7 @@ height: 30px;
     position: absolute;
     cursor: pointer;
     color: #0ff;
-    font-family: sans-serif;
+    font-family: 'League Spartan', sans-serif;
     pointer-events: auto;
     opacity: 0;
   }

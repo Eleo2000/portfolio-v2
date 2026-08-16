@@ -6,7 +6,7 @@ window.addEventListener('DOMContentLoaded', () => {
   /* ================================
      CAMERA FIT
   ================================= */
-  function fitCameraToObject(camera, object, offset = 1.2) {
+  function fitCameraToObject(camera, object, offset = 1.2, lookAtY = 0, cameraY = 0) {
     const box = new THREE.Box3().setFromObject(object);
     const size = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
@@ -18,9 +18,10 @@ window.addEventListener('DOMContentLoaded', () => {
     let cameraZ = Math.abs(maxDim / Math.tan(fov / 2));
 
     cameraZ *= offset;
-    camera.position.set(0, 1, cameraZ);
+    camera.position.set(0, cameraY, cameraZ);
+    camera.lookAt(0, lookAtY, 0);
 
-    camera.near = maxDim / 100;
+    camera.near = Math.max(0.01, maxDim / 500);
     camera.far = maxDim * 100;
     camera.updateProjectionMatrix();
   }
@@ -28,7 +29,7 @@ window.addEventListener('DOMContentLoaded', () => {
   /* ================================
      CREATE SCENE
   ================================= */
-  function createScene(containerId, modelPath) {
+  function createScene(containerId, modelPath, offsetDesktop = 0.95, offsetMobile = 1.15, lookAtY = 0, cameraY = 0) {
     const container = document.getElementById(containerId);
 
     /* ---------- RENDERER ---------- */
@@ -69,7 +70,9 @@ window.addEventListener('DOMContentLoaded', () => {
       fitCameraToObject(
         camera,
         model,
-        container.clientWidth < 768 ? 1.15 : 0.95
+        container.clientWidth < 768 ? offsetMobile : offsetDesktop,
+        lookAtY,
+        cameraY
       );
 
       if (gltf.animations.length) {
@@ -103,7 +106,9 @@ window.addEventListener('DOMContentLoaded', () => {
         fitCameraToObject(
           camera,
           model,
-          width < 768 ? 1.15 : 0.95
+          width < 768 ? offsetMobile : offsetDesktop,
+          lookAtY,
+          cameraY
         );
       }
     }
@@ -123,9 +128,22 @@ window.addEventListener('DOMContentLoaded', () => {
 
     /* ---------- ANIMATION ---------- */
     const clock = new THREE.Clock();
+    let rafId;
+
+    // Pause quand l'onglet est caché
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      } else if (!rafId) {
+        animate();
+      }
+    });
 
     function animate() {
-      requestAnimationFrame(animate);
+      rafId = requestAnimationFrame(animate);
 
       const delta = clock.getDelta();
       const elapsed = clock.getElapsedTime();
@@ -148,7 +166,7 @@ window.addEventListener('DOMContentLoaded', () => {
   /* ================================
      INIT SCENES
   ================================= */
-  createScene('threejs-container', 'assets/3d/laptop.glb');
+  createScene('threejs-container', 'assets/3d/laptop.glb', 1.2, 0.85, 0.2, 2.5);
   createScene('threejs-container-2', 'assets/3d/footer/scene.gltf');
 
 });

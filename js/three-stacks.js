@@ -506,9 +506,36 @@ loader.load(
 const clock = new THREE.Clock(); // ← Manquait
 
 // Animate
+let isVisible = true;
+let isInViewport = true;
+let rafId;
+
+const skillSection = document.getElementById('skill');
+
+// Pause quand l'onglet est caché
+document.addEventListener('visibilitychange', () => {
+  isVisible = !document.hidden;
+  if (isVisible && isInViewport && !rafId) animate();
+});
+
+// Pause quand la section n'est pas dans le viewport
+if (skillSection) {
+  const visObserver = new IntersectionObserver(([entry]) => {
+    isInViewport = entry.isIntersecting;
+    if (isInViewport && isVisible && !rafId) animate();
+  }, { threshold: 0.05 });
+  visObserver.observe(skillSection);
+}
+
 function animate() {
-  requestAnimationFrame(animate);
-  // 📐 Mise à jour dynamique du renderer si taille CSS change
+  rafId = requestAnimationFrame(animate);
+
+  if (!isVisible || !isInViewport) {
+    rafId = null;
+    return;
+  }
+
+  // Mise à jour dynamique du renderer si taille CSS change
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;
 
@@ -530,38 +557,66 @@ const ctx = document.getElementById('radarChart').getContext('2d');
 new Chart(ctx, {
   type: 'radar',
   data: {
-    labels: ['Html/CSS', 'Symfony', 'threeJs', 'UX/UI', 'Angular', 'SQL'],
+    labels: ['HTML/CSS', 'PHP', 'Three.js', 'UX/UI', 'Angular', 'SQL'],
     datasets: [{
       label: "Eleo's Skills",
       data: [95, 75, 85, 90, 80, 80],
-      backgroundColor: 'rgba(0, 255, 255, 0.15)',
-      borderColor: '#0ff',
-      borderWidth: 3,
-      pointBackgroundColor: '#00ffff',
+      backgroundColor: 'rgba(37, 177, 255, 0.15)',
+      borderColor: '#25B1FF',
+      borderWidth: 2.5,
+      pointBackgroundColor: '#25B1FF',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: '#0ff'
+      pointHoverBorderColor: '#25B1FF',
+      pointRadius: 4,
+      pointHoverRadius: 6
     }]
   },
   options: {
     responsive: true,
+    maintainAspectRatio: true,
     scales: {
       r: {
-        angleLines: { color: '#444' },
-        grid: { color: '#555' },
-        pointLabels: { color: '#fff', font: { size: 14 } },
+        beginAtZero: true,
+        min: 0,
+        max: 100,
         ticks: {
-          color: '#ccc',
-          backdropColor: 'transparent',
+          display: false,
           stepSize: 20,
-          beginAtZero: true,
           max: 100
+        },
+        grid: {
+          color: 'rgba(80, 130, 160, 0.35)'
+        },
+        angleLines: {
+          color: 'rgba(80, 130, 160, 0.25)'
+        },
+        pointLabels: {
+          color: 'rgba(245, 245, 220, 0.9)',
+          font: {
+            family: 'League Spartan',
+            size: 13,
+            weight: '600'
+          }
         }
       }
     },
     plugins: {
       legend: {
         display: false
+      },
+      tooltip: {
+        backgroundColor: 'rgba(9, 15, 34, 0.92)',
+        titleFont: { family: 'League Spartan', size: 13 },
+        bodyFont: { family: 'League Spartan', size: 13 },
+        borderColor: 'rgba(37, 177, 255, 0.3)',
+        borderWidth: 1,
+        padding: 10,
+        displayColors: false,
+        callbacks: {
+          title: () => '',
+          label: (context) => `${context.label}: ${context.raw}%`
+        }
       }
     }
   }

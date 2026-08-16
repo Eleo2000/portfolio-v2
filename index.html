@@ -11,17 +11,14 @@
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="accueil.css">
     <link rel="stylesheet" href="services.css">
-    <link rel="stylesheet" href="equipe.css">
     <link rel="stylesheet" href="portfolio.css">
     <link rel="stylesheet" href="footer.css">
     <link rel="icon" type="image/svg" href="assets/logo.svg">
-    <link rel="icon" type="image/svg" href="assets/" />
     <link rel="stylesheet" href="form.css">
-    <link rel="stylesheet" href="canvas.css">
     <link rel="stylesheet" href="chatbot.css">
-    <link rel="stylesheet" href="cursor.css">
+    <link rel="stylesheet" href="canvas.css">
     <link rel="stylesheet" href="skill.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -36,9 +33,6 @@
     <title>Portfolio Eleo</title>
 </head>
 <body>
-    <script>window.onload = function () {
-       
-      }</script>
         <div class="loaderXd">
            <!-- load portfolio xD -->
         <svg class="logoEvolutech" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 15.04 10.17"><defs><clipPath id="clip-path" transform="translate(-5.73)"><rect id="ab2" x="8.17" y="11.12" width="11.52" height="16.4" transform="translate(4.7 -2.63) rotate(12.98)" fill="none"/></clipPath><clipPath id="clip-path-22" transform="translate(-5.73)"><rect id="ab0" x="1.19" y="10.54" width="8.09" height="11.52" transform="translate(3.79 -0.76) rotate(12.98)" fill="none"/></clipPath><clipPath id="clip-path-33" transform="translate(-5.73)"><rect id="ab1" x="5.31" y="10.8" width="8.09" height="11.52" transform="translate(3.96 -1.68) rotate(12.98)" fill="none"/></clipPath></defs><g id="Calque_22" data-name="Calque 22"><g id="Calque_1-2" data-name="Calque 11"><g clip-path="url(#clip-path)"><path id="bigE" d="M14.68,1.69h-.11l0,.12-.44,2V4H17l-.33,1.56H13.75l0,.11-.59,2.69,0,.15h5.63L18.37,10H11.14l.37-1.68h0l.6-2.68h0l.41-1.83h0l.45-2h0L13.34.13h7.27l-.34,1.56Z" transform="translate(-5.73)" fill="#f4f4f4"/></g><path id="bigE-2" data-name="bigE" d="M14.68,1.69h-.11l0,.12-.44,2V4H17l-.33,1.56H13.75l0,.11-.59,2.69,0,.15h5.63L18.37,10H11.14l.37-1.68h0l.6-2.68h0l.41-1.83h0l.45-2h0L13.34.13h7.27l-.34,1.56Z" transform="translate(-5.73)" fill="none" stroke="#2aaaf1" stroke-opacity="0.85" stroke-width="0.26"/><path d="M7.38,3.44H8.94L7.45,10H5.89Z" transform="translate(-5.73)" fill="none" stroke="#ef6629" stroke-width="0.26"/><g clip-path="url(#clip-path-22)"><path id="b0-2" d="M7.38,3.44H8.94L7.45,10H5.89Z" transform="translate(-5.73)" fill="#ef6629"/></g><path d="M10.43.13H12L9.76,10H8.2Z" transform="translate(-5.73)" fill="none" stroke="#ef6629" stroke-width="0.26"/><g clip-path="url(#clip-path-33)"><path d="M10.43.13H12L9.76,10H8.2Z" transform="translate(-5.73)" fill="#ef6629"/></g></g></g></svg>
@@ -135,7 +129,11 @@
     
         <div class="accueil s1  section" id="accueil">
             <div class="left ">
-                <img class="left--hero-img" src="assets/hero.png" />
+                <img class="hero-card" src="assets/eleo--pro.png" alt="Eleo Tahindraza" />
+                <img class="left--hero-img" src="assets/hero%201.png" alt="Eleo Tahindraza" />
+                <div class="hero-intro revealL-4">
+                    <p class="hero-desc">Full Stack JavaScript &amp; Three.js Developer</p>
+                </div>
                 <div class="projet-clip revealL-4">
                     <a href="#portf_recent" class="btn-p btn-voir-projet h_m">See my projects</a>
                 </div>
@@ -210,12 +208,23 @@
                 <canvas id="webgl"></canvas>
             </section>
             
-            <div class="card-fullscreen">
-                
-                <img src="" alt="" />
-                <h2>Titre de la carte</h2>
-                <p>Description détaillée de la carte sélectionnée</p>
-                <button id="closeCard">Return</button>
+            <div class="card-fullscreen" id="cardFullscreen">
+                <div class="card-fullscreen-inner">
+                    <button id="closeCard" class="card-close" aria-label="Fermer">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                    <div class="card-image-wrap">
+                        <div class="card-loader"></div>
+                        <img id="cardImage" src="" alt="" />
+                    </div>
+                    <div class="card-content">
+                        <h2 id="cardTitle">Titre de la carte</h2>
+                        <p id="cardDesc">Description détaillée de la carte sélectionnée</p>
+                    </div>
+                </div>
             </div>
 
             <!-- <canvas id="geminiCanvas"></canvas> -->
@@ -301,6 +310,7 @@
 <script>
     
     const blur = document.querySelector('.blur')
+    const section = document.querySelectorAll('.section')
     const bodys = document.querySelector('body')
     function reset_mini_screen(){
         if( bodys.classList.value == "menu-round"){
@@ -355,7 +365,7 @@
 <!-- <script type="module" src="js/three-shape.js"></script> -->
 <script src="js/nav.js"></script>
 <!-- <script src="js/mode.js"></script> -->
-<script src="js/bot.js"></script>
+<!-- <script src="js/bot.js"></script> -->
 <!-- <script src="js/slide-portfolio.js"></script> -->
 <!-- <script src="js/cursor.js"></script> -->
 <script src="js/fireflies.js"></script>
