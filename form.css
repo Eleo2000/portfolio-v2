@@ -5,7 +5,7 @@
     align-items: center;
     justify-items: center;
     position: absolute;
-    z-index: 51;
+    z-index: 200;
     transition: 0.25s ease-in-out;
 }
 

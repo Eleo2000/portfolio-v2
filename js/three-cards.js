@@ -216,17 +216,17 @@ data.forEach((d, i) => {
   };
 });
 
-function createTextLabel(text, color = '#ff8a00') {
+function createTextLabel(text, color = '#5acaec') {
   const canvas = document.createElement('canvas');
   canvas.width = 512;
   canvas.height = 128;
   const ctx = canvas.getContext('2d');
 
-  // Fond transparent + texte avec ombre
+  // Fond transparent + texte avec ombre bleu foncé
   ctx.font = 'bold 48px Arial';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+  ctx.fillStyle = 'rgba(0, 20, 40, 0.55)';
   ctx.fillText(text, 258, 66); // Ombre décalée
 
   ctx.fillStyle = color;
@@ -357,6 +357,7 @@ const cardImage = document.getElementById('cardImage');
 const cardTitle = document.getElementById('cardTitle');
 const cardDesc = document.getElementById('cardDesc');
 const cardLoader = cardOverlay.querySelector('.card-loader');
+const flexa = document.querySelector('.flexa');
 
 canvas.addEventListener('click', () => {
   ray.setFromCamera(mouse, camera);
@@ -369,6 +370,7 @@ canvas.addEventListener('click', () => {
     cardDesc.textContent = desc || '';
     cardOverlay.classList.add('visible');
     document.body.style.overflow = "hidden";
+    if (flexa) flexa.style.display = "none";
 
     // Reset propre : pas d'image résiduelle
     cardImage.classList.add('is-loading');
@@ -406,6 +408,7 @@ closeBtn.addEventListener('click', () => {
   cardImage.classList.add('is-loading');
   cardLoader.classList.add('is-active');
   document.body.style.overflowY = "initial";
+  if (flexa) flexa.style.display = "flex";
 });
 
 // Fermer avec Echap
@@ -415,6 +418,7 @@ document.addEventListener('keydown', (e) => {
     cardImage.src = '';
     cardImage.classList.add('is-loading');
     cardLoader.classList.add('is-active');
+    if (flexa) flexa.style.display = "flex";
   }
 });
 

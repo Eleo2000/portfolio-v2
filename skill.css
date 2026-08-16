@@ -1,16 +1,21 @@
 #skill{
-    
+    grid-column: 1 / -1;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 /***radar****/
 .containera {
     display: grid;
     grid-template-columns:1fr 1fr;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    gap: 2rem;
     width: 100%;
+    max-width: min(90rem, 100%);
+    margin: 0 auto;
     height: auto;
     align-items: center;
+    box-sizing: border-box;
   }
   
   .viewer, .skills {
@@ -23,12 +28,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    min-height: 500px;
+    box-sizing: border-box;
   }
   
   #threeCanvas {
     width: 100%;
     height: 100%;
     display: block;
+    max-width: 100%;
   }
   
   .skills {
@@ -36,8 +45,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: max-content;
+    width: 100%;
+    max-width: 100%;
     gap: 1rem;
+    box-sizing: border-box;
   }
   
   .skills h2 {
@@ -60,7 +71,7 @@
     .containera {
         grid-template-rows:max-content 1fr;
         grid-template-columns:unset;
-        
+        gap: 1rem;
         justify-content: center;
         align-items: center;
     }
@@ -74,27 +85,36 @@
     .viewer, .skills {
         padding-top: 0;
     }
-    
+
+    .viewer {
+        min-height: 400px;
+    }
 
     #threeCanvas {
-        width: auto;
-        height: 705px;
+        width: 100%;
+        height: 100%;
         display: block;
     }
 
     #radarChart {
-       transform: scale(0.7);
+        transform: none;
+        max-width: 100%;
     }
   }
 
   @media (max-width: 1024px) {
+    .viewer {
+        min-height: 350px;
+    }
+
     #threeCanvas {
-      width: auto;
-      height: 400px;
-      display: block;
-  }
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
 
     #radarChart {
-       transform: scale(0.8);
+        transform: none;
+        max-width: 100%;
     }
   }

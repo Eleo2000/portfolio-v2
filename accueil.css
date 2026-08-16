@@ -48,14 +48,94 @@
 }
 
 
+/* === Photo professionnelle Eleo (card style) === */
 .hero-card {
-    width: 80%;
+    display: block;
+    width: 100%;
+    height: auto;
     max-width: 360px;
     object-fit: cover;
     object-position: top center;
     pointer-events: none;
 }
 
+/* === Conteneur des deux photos hero === */
+.hero-imgs{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+    pointer-events: none;
+}
+.hero-imgs .left--hero-img,
+.hero-imgs .hero-card-wrapper{
+    width: 45%;
+    max-width: 360px;
+    pointer-events: none;
+}
+.hero-imgs .hero-card{
+    width: 100%;
+    display: block;
+}
+
+/* === Wrapper + effet flou progressif en bas de la photo Eleo === */
+.hero-card-wrapper{
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+/* Zone floue en bas */
+.hero-card-wrapper::before {
+    content: "";
+    position: absolute;
+    left: -5%;
+    right: -5%;
+    bottom: -5%;
+    height: 45%;
+    background-image: url("assets/eleo--pro.png");
+    background-size: cover;
+    background-position: bottom center;
+    filter: blur(12px);
+    transform: scale(1.05);
+    z-index: 2;
+    pointer-events: none;
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.25) 25%,
+        rgba(0, 0, 0, 0.75) 60%,
+        black 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.25) 25%,
+        rgba(0, 0, 0, 0.75) 60%,
+        black 100%
+    );
+}
+
+/* Fondu vers le fond */
+.hero-card-wrapper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            to bottom,
+            transparent 45%,
+            rgba(23, 23, 23, 0.05) 55%,
+            rgba(23, 23, 23, 0.45) 75%,
+            #171717 100%
+        );
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* === Photo hero principale === */
 .left--hero-img{
     width: 85%;
     max-width: 360px;
@@ -63,20 +143,58 @@
     pointer-events: none;
 }
 
+/* === Zone de texte hero === */
 .hero-intro {
-    text-align: center;
+    text-align: left;
     z-index: 2;
-    max-width: 90%;
+    max-width: 85%;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-sizing: border-box;
 }
 
+/* === Titre principal hero === */
+.hero-title {
+    font-family: 'League Spartan', sans-serif;
+    font-size: clamp(2rem, 5.5vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.05;
+    color: rgba(245, 245, 220, 0.97);
+    margin: 0 0 0.75rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+/* === Description / accroche professionnelle === */
 .hero-desc {
     font-family: 'League Spartan', sans-serif;
-    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    font-size: clamp(0.8rem, 1.5vw, 0.95rem);
     font-weight: 400;
-    letter-spacing: 1.5px;
-    line-height: 1.4;
-    color: rgba(245, 245, 220, 0.9);
-    margin: 0;
+    letter-spacing: 0.1px;
+    line-height: 1.55;
+    color: rgba(245, 245, 220, 0.65);
+    margin: 0 0 1.5rem;
+    overflow-wrap: anywhere;
+}
+
+/* === Conteneur des boutons hero === */
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.hero-actions .btn-p,
+.hero-actions .btn-sec {
+    padding: 0.75rem 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    border-radius: 0.5rem;
 }
 
 
@@ -102,6 +220,7 @@
     grid-template-rows: 1fr;
 }
 
+/* === Canvas Three.js : remplit son container === */
 #threejs-container canvas {
     width: 100%;
     height: 100%;
@@ -117,84 +236,102 @@
     justify-self: start;
 }
 
-/*********A modifier clip-path xD********/
+/* === Zone appel à l'action (CTA) === */
 .projet-clip{
-    
     width: fit-content;
 }
-  
-.btn-voir-projet::before {
+
+/* === Boutons hero : effet de remplissage cyan au survol === */
+.btn-voir-projet::before,
+.btn-contact-projet::before {
     position: absolute;
-    content: "See my projects";
     color: rgb(19, 19, 19);
     display: grid;
     justify-content: center;
     align-content: center;
     left: 0;
     top: 0;
-    margin-top: 0.5px;
-    
     width: 100%;
-    height: 37px;
+    height: 100%;
     background: linear-gradient(0deg,#276095,#5fd3f7) ;
     border-radius: 5px;
     clip-path: circle(0%);
     transition: .4s;
+}
 
-  }
-  .btn-voir-projet{
+.btn-voir-projet::before { content: "View my work"; }
+.btn-contact-projet::before { content: "Work with me"; }
+
+/* Positionnement du bouton CTA */
+.btn-voir-projet,
+.btn-contact-projet{
     position: relative;
     align-self: start;
     justify-self: start;
     z-index: 3;
     transition: 0.2s ease-out;
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    min-width: 10rem;
+    text-align: center;
+    border: 1px solid var(--c-border);
+    border-radius: 5px;
+    overflow: hidden;
 }
- 
-  .btn-voir-projet:hover::before {
-      clip-path: circle(100%);
-      opacity: 1;
-      filter: brightness(1.05);
-  }
-  
-  .btn-voir-projet:hover {
 
+/* View my work en bleu par défaut */
+.btn-voir-projet{
+    color: #111;
+    background: #25B1FF;
+    border-color: #25B1FF;
+}
+
+/* Animation de remplissage au hover */
+.btn-voir-projet:hover::before,
+.btn-contact-projet:hover::before {
+    clip-path: circle(100%);
+    opacity: 1;
+    filter: brightness(1.05);
+}
+
+.btn-voir-projet:hover,
+.btn-contact-projet:hover {
     border: 1px solid rgba(255, 255, 255, 0);
-
 }
 
 
 
 
-
-
+/* === Responsive : tablettes et petits écrans (≤850px) === */
 @media screen and (max-width:850px){
     .title-evolutech{
         margin-top: 0.4rem;
         font-size: 2.5rem;
-
     }
     .title-evo{
         width: 20rem;
     }
-    
-    
     .demi-ligne{
-
         width: 16rem;
-
     }
     .sous-titre-0 , .sous-titre-1{
         font-size: 1rem;
     }
 
+    /* Passe le contenu au-dessus du visuel 3D */
     .left{
-        grid-row: 2/3;
+        grid-row: 1/2;
         margin-left: 0;
         justify-items: center;
-        
+        padding: 0 1rem;
+        box-sizing: border-box;
     }
     .right{
+        grid-row: 2/3;
         margin-top: 2rem;
+    }
+    .hero-intro {
+        max-width: 95%;
     }
     .btn-voir-projet{
         justify-self: center;
@@ -203,35 +340,53 @@
         
         justify-self: center;
     }
-    
 }
 
+/* === Ajustement taille zone droite en tablette === */
 @media screen and (max-width:850px){
     .right{
-        width: 25rem;
+        width: 21rem;
     }
     .boxes svg {
         transform: scale(2.8) ;
     }
-   
 }
 
+/* === Responsive : tablettes/petits écrans (≤680px) === */
+@media screen and (max-width:680px){
+    .hero-intro {
+        max-width: 95%;
+    }
+    .hero-title {
+        font-size: clamp(1.15rem, 5vw, 1.6rem);
+        letter-spacing: 0.5px;
+        line-height: 1.2;
+    }
+    .hero-desc {
+        font-size: clamp(0.85rem, 4vw, 1rem);
+        letter-spacing: 0.3px;
+        line-height: 1.55;
+    }
+    .hero-actions {
+        justify-content: center;
+    }
+}
+
+/* === Responsive : très petits écrans (≤420px) === */
 @media screen and (max-width:420px){
     .right{
         margin-top: 0rem;
         overflow: visible;
     }
-
     .title-evolutech{
-        
         font-size: 30px;
     }
     .title-evo{
         width: 17rem;
     }
-   
 }
 
+/* === Responsive mobile : canvas 3D moins haut === */
 @media screen and (max-width: 768px){
     #threejs-container {
         aspect-ratio: 16 / 9;
@@ -239,13 +394,12 @@
 }
 
 
+/* === Glow bleu/cyan derrière le titre hero === */
 .title-evolutech::before{
     content: "";
     position: absolute;
-    
     width: 256px;
     height: 216px;
-
     border-radius: 100%;
     background-color: var(--c-left);
     align-self: center;
@@ -257,6 +411,7 @@
 
 
 
+/* === Glow orange/corail à droite du hero === */
 .right::before{
     content: "";
     position: absolute;
@@ -287,7 +442,7 @@
     
 }
 
-/**modification eleo***/
+/* === Main droite décorative flottante === */
 .h-right{
     transform-origin: right;
     transform-box: fill-box;
@@ -297,12 +452,10 @@
     transform: translateY(-35px) ;
     z-index: -1;
     opacity: 0;
-    animation: appear-h-r 0.4s ease-out 0.8s forwards, h-r-flotte 1s ease-in-out 1.3s infinite alternate
-    
-    ;
+    animation: appear-h-r 0.4s ease-out 0.8s forwards, h-r-flotte 1s ease-in-out 1.3s infinite alternate;
 }
 
-
+/* === Animations de flottement des mains === */
 @keyframes h-r-flotte {
     100%{
         transform: translateY(-40px) ;
@@ -314,21 +467,22 @@
     }
 }
 
+/* === Zone des boîtes 3D flottantes === */
 .boxes{
     grid-row: 2/3;
     transform: scale(1) translateY(-200px);
-
     justify-content: center;
     z-index: 10;
     opacity: 0;
     animation: appear-b 0.4s ease-out 0.8s forwards ;
-    
 }
 
+/* Mise à l'échelle des SVG boîtes */
 .boxes svg {
     transform: scale(1.8) translateY(-50px);
 }
 
+/* === Animations spécifiques de chaque boîte === */
 #box0{
     animation: moove-b 4s ease-out infinite alternate , box_ilum 2s ease-out infinite .5s alternate;
 }
@@ -346,12 +500,14 @@
     animation: flotte-b 0.1s ease-out infinite 0.2s alternate-reverse;
 }
 
+/* === Keyframes d'apparition et de flottement des boîtes === */
 @keyframes flotte-b {
     100%{
-        transform: translateY(-10px) ;
+        transform: translateY(-10px);
     }
 }
 
+/* Apparition en fondu + scale des boîtes */
 @keyframes appear-b {
     0%{
         opacity: 0;
@@ -360,49 +516,32 @@
     100%{
         opacity: 1;
         transform: scale(0.16) translateY(-200px) translateX(0px);
-
     }
 }
 
+/* Trajectoire aléatoire type "8" pour boîte 0 et 3 */
 @keyframes moove-b {
-    0%{
-        transform:  translateY(0px) translateX(0px);
-    }
-    25%{
-        transform:  translateY(-5px) translateX(10px);
-    }
-    50%{
-        transform:  translateY(-10px) translateX(0px);
-    }
-    75%{
-        transform:  translateY(-5px) translateX(-10px);
-    }
-    100%{
-        transform:  translateY(0px) translateX(0px);
-    }
-}
-@keyframes moove-b2 {
-    0%{
-        transform:  translateY(0px) translateX(0px);
-    }
-    30%{
-        transform:  translateY(-5px) translateX(5px);
-    }
-    60%{
-        transform:  translateY(-5px) translateX(-5px);
-    }
-    100%{
-        transform:  translateY(0px) translateX(0px);
-    }
+    0%   { transform: translateY(0px)  translateX(0px);  }
+    25%  { transform: translateY(-5px) translateX(10px); }
+    50%  { transform: translateY(-10px) translateX(0px); }
+    75%  { transform: translateY(-5px) translateX(-10px);}
+    100% { transform: translateY(0px)  translateX(0px);  }
 }
 
-/**modification eleo***/
+/* Trajectoire secondaire pour boîte 1 */
+@keyframes moove-b2 {
+    0%   { transform: translateY(0px) translateX(0px); }
+    30%  { transform: translateY(-5px) translateX(5px); }
+    60%  { transform: translateY(-5px) translateX(-5px);}
+    100% { transform: translateY(0px) translateX(0px); }
+}
+
+/* Effet de surbrillance sur les mains SVG */
 .bright_hand{
     filter: brightness(1.1) contrast(0.9) saturate(1.2) ;
-
 }
 
-
+/* Animation d'illumination pulsante des boîtes */
 @keyframes box_ilum {
     0%{
         filter: brightness(1.1) contrast(0.9) saturate(1);
@@ -412,8 +551,8 @@
     }
 }
 
+/* === Main gauche décorative flottante === */
 .h-left{
-    
     transform-box: fill-box;
     grid-row: 1/2;
     width: 65%;
@@ -451,62 +590,53 @@
 }
 
 
-/******reveal xD******/
-/*d'en bas*/
+/* =====================================================
+   ANIMATIONS D'ENTRÉE (REVEAL)
+   Classes reveal-* appliquées par reveal.js au scroll
+   ===================================================== */
+
+/* --- reveal depuis le bas --- */
 [class*=reveal-]{
     opacity: 0;
     transform: translateY(20px);
-    transition: 0.3s ease-out ;
+    transition: 0.3s ease-out;
 }
-/*de la gauche*/
+
+/* --- reveal depuis la gauche --- */
 [class*=revealL-]{
     opacity: 0;
     transform: translateX(-20px);
-    transition: 0.3s ease-out ;
+    transition: 0.3s ease-out;
 }
-/*scaling*/
+
+/* --- reveal avec scale --- */
 [class*=revealS-]{
     opacity: 0;
     transform: scale(0.5);
-    transition: 0.3s ease-out ;
+    transition: 0.3s ease-out;
 }
 
-
-
-/*de la droite*/
+/* --- reveal depuis la droite --- */
 [class*=revealR-]{
     opacity: 0;
     transform: translateX(40px);
-    transition: 0.3s ease-out ;
+    transition: 0.3s ease-out;
 }
 
+/* État visible après déclenchement */
 .reveal-active{
     opacity: 1;
     transform: translate(0) scale(1);
 }
 
-.reveal-0, .revealL-0,.revealR-0, .revealS-0{
+/* --- Délais d'animation progressifs --- */
+.reveal-0, .revealL-0,.revealR-0, .revealS-0{ transition-delay: 0.2s; }
+.reveal-1, .revealL-1,.revealR-1, .revealS-1{ transition-delay: 0.3s; }
+.reveal-2, .revealL-2,.revealR-2, .revealS-2{ transition-delay:0.4s; }
+.reveal-3, .revealL-3,.revealR-3, .revealS-3{ transition-delay: 0.5s; }
+.reveal-4, .revealL-4,.revealR-4, .revealS-4{ transition-delay: 0.6s; }
 
-    transition-delay: 0.2s;
-}
-.reveal-1, .revealL-1,.revealR-1, .revealS-1{
-
-    transition-delay: 0.3s;
-}
-.reveal-2, .revealL-2,.revealR-2, .revealS-2{
-
-    transition-delay:0.4s;
-}
-.reveal-3, .revealL-3,.revealR-3, .revealS-3{
-
-    transition-delay: 0.5s;
-}
-.reveal-4, .revealL-4,.revealR-4, .revealS-4{
-
-    transition-delay: 0.6s;
-}
-/*****fin reveal xD******/
-
+/* === Canvas du jeu de la vie (décoratif) === */
 canvas#life {
     border-radius: 10px;
 }
@@ -522,4 +652,17 @@ canvas#life {
     filter:
       drop-shadow(0 0 5px rgba(255,165,0,0.4))
       drop-shadow(0 0 10px rgba(0,170,255,0.6));
-  }
+}
+
+@media screen and (max-width: 720px) {
+    .hero-imgs {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    .hero-imgs .left--hero-img,
+    .hero-imgs .hero-card-wrapper {
+        width: 80%;
+        max-width: 360px;
+    }
+}

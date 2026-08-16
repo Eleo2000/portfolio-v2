@@ -8,6 +8,7 @@ let navy = document.querySelector(".navy");
 let is_howModalMail = false;
 
 let other = false;
+let flexa = document.querySelector(".flexa");
 //a fermer click sur [X]
 //validation à reset value si envoyé xD
 
@@ -19,7 +20,8 @@ function back(){
         e.classList.remove("activa");
     })
     document.body.style.overflowY = "initial";
-    navy.style.display = "initial"
+    navy.style.display = "initial";
+    if(flexa) flexa.style.display = "flex";
     
     // header.style.filter = "blur(0)";
     is_howModalMail = false
@@ -38,7 +40,8 @@ function show(){
         e.classList.add("activa");
     })
     document.body.style.overflow = "hidden";
-    navy.style.display = "none"
+    navy.style.display = "none";
+    if(flexa) flexa.style.display = "none";
     
     // header.style.filter = "blur(7px)";
 }

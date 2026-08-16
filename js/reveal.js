@@ -37,13 +37,13 @@ window.onload=() =>{
     
     var wid = innerWidth;
     if(wid <420){
-        document.querySelector(".right").style.overflow="initial";
+        document.querySelector(".right").style.overflow="hidden";
     }
 }
 
 
 window.onresize = () =>{
     if(innerWidth <420){
-        document.querySelector(".right").style.overflow="initial";
+        document.querySelector(".right").style.overflow="hidden";
     }
 }
