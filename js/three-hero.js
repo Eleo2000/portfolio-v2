@@ -167,6 +167,6 @@ window.addEventListener('DOMContentLoaded', () => {
      INIT SCENES
   ================================= */
   createScene('threejs-container', 'assets/3d/laptop.glb', 1.2, 0.85, 0.2, 2.5);
-  createScene('threejs-container-2', 'assets/3d/footer/scene.gltf');
+  createScene('threejs-container-2', 'assets/3d/footer/scene.gltf', 0.5, 0.65, 0.85, 3);
 
 });

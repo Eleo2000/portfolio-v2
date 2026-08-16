@@ -1,35 +1,48 @@
-/****mbola à modifier le linear gradient io*****/
-.footer{
-    grid-column: 1/-1;
-    padding-top: 3rem;
-    display: grid;
-    margin-top: 50px;
-    /*grid-template-columns: repeat(3, 1fr);*/
-    grid-template-columns: 1fr;
-    grid-template-rows: 10rem 7rem 4rem 1rem;
-    grid-column-gap: 6rem;
-    grid-row-gap: 1rem;
-    justify-items: center;/****X****/
-    align-items: center; /***Y***/
+/* =========================================
+   FOOTER PROFESSIONNEL & RESPONSIVE
+   ========================================= */
+.footer.section {
+    position: relative;
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    min-height: 80vh;
+    text-align: center;
     overflow: hidden;
 }
 
 
 
 
-.icon{
-
-    display: inline-block;
-    margin-left:2rem ;
-   margin-right: 2rem;
-   margin-bottom: 3rem;
+/* --- Icônes du footer --- */
+.footer .icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.75rem;
+    height: 3.75rem;
+    margin: 0;
+    cursor: pointer;
 }
+
+.footer .icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: transform 0.25s ease;
+}
+
+.footer .icon:hover svg {
+    transform: scale(1.1);
+}
+
 .content-portfolio{
     font-size: var(--text-detail);
 }
 
-.content-service{
-}
 .content-equipe{
     font-size: 12px;
     letter-spacing: 3px;
@@ -42,149 +55,155 @@
     line-height: 20px;
 }
 
-.title-footer{
-    color: beige;
-    transform: translateY(30px);
-} 
-
-.contact-us-f{
-    align-self: center;
-}
-
-.titre-footer{
-    display: grid;
-    grid-template-columns: minmax(min-content);
-    grid-template-rows: repeat(2,1fr);
+/* --- Titre et soulignement --- */
+.titre-footer {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-items: center;
+    gap: 0.75rem;
+    z-index: 2;
 }
 
-.surligne{
-    width: 200px;
-    top: 0;
-    height: 5px;
-    background-color:#A4A2A2;
-    grid-row: 2/-1;
-    align-self: center;
-    justify-self: center;
-    transform: translateY(8px);
-    
+.title-footer {
+    color: var(--c-principal, beige);
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    letter-spacing: 2px;
+    line-height: 1.2;
+    text-transform: none;
+    padding: 0;
 }
 
-.contact-us-f::after{
+.surligne {
+    width: clamp(6rem, 15vw, 12rem);
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #A4A2A2, transparent);
+    border-radius: 2px;
+}
+
+/* --- Pas de before bleu sur le titre footer --- */
+.title-footer::before {
+    content: none;
+}
+
+/* --- Glow du 3D déplacé sur le container footer --- */
+.footer::before {
     content: "";
     position: absolute;
-    z-index: -1;
-    width: 800px;
-    height: 500px;
-
+    pointer-events: none;
+    width: 370px;
+    height: 398px;
     border-radius: 100%;
-    background-color: rgb(44, 126, 202);
-    align-self: center;
-    justify-self: center;
-    transform: translateY(130px) translateX(330px);
-    filter: blur(100px);
-    opacity: 0.3;
-    
+    background-color: var(--c-right);
+    top: 50%;
+    right: -150px;
+    transform: translateY(-50%);
+    filter: blur(180px);
+    opacity: 0.8;
+    z-index: 0;
 }
 
-
-.icons-contact{
-    z-index: 10;
-    transform: scale(0.5)!important;
-    display: grid;
-    align-self: center;
-    justify-self: center;
-    grid-template-columns: repeat(3, 1fr)  ;
-    align-items: end;
-    transform: translateY(0px);
+/* --- Icônes de contact --- */
+.icons-contact {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin: 0.5rem 0 1rem;
 }
-.copyright{
+/* --- Copyright --- */
+.copyright {
+    position: relative;
+    z-index: 2;
     color: rgb(150, 150, 150);
     font-size: var(--text-small);
-    align-self: end;
-    justify-self: center;
-    
-    transform: translateY(-10px);
+    margin-top: 1rem;
 }
 
-.contact-us-f{
-    
+/* --- Texte d'appel --- */
+.contact-us-f {
     position: relative;
-    letter-spacing: 4px;
-    font-weight: 600;
-    z-index: 10;
-    color: rgb(184, 184, 184);
+    z-index: 2;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    letter-spacing: 1.5px;
+    font-weight: 400;
+    color: rgba(184, 184, 184, 0.95);
     overflow-wrap: anywhere;
     text-align: center;
     width: 100%;
-    max-width: 90%;
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 0 1rem;
     box-sizing: border-box;
+    line-height: 1.6;
 }
 
-.footer-cta{
+/* --- CTA --- */
+.footer-cta {
     position: relative;
-    z-index: 10;
+    z-index: 2;
     display: inline-block;
-    margin: 0.5rem 0 1.5rem;
-}
-/*****mbola à regler xD ********/
-/* .contact-us-f::before{
-    
-    content: "";
-    position: absolute;
-    width: 100px;
-    height: 12px;
-    background-color: #2aabf167;
-    transform: translateY(13px);
-    z-index: -4;
-} */
-
-
-.icon{
-    cursor: pointer;
+    margin: 0.5rem 0 1rem;
 }
 
-.i-fb{
+/* --- Tailles SVG --- */
+.i-fb {
     width: 30px;
     height: 30px;
 }
-.i-in{
+
+.i-in {
     width: 30px;
     height: 30px;
 }
-.i-g{
+.i-g {
     width: 30px;
-    height: 33x;
+    height: 33px;
 }
 
-#facebook, #linkedin, #google{
-    fill: rgba(175, 174, 174, 0.514);
-    transition: 0.2s ease-in-out;
-    
+#facebook, #linkedin, #google {
+    fill: rgba(175, 174, 174, 0.6);
+    transition: fill 0.25s ease;
 }
 
-.i-facebook:hover #facebook , .i-linkedin:hover #linkedin , .i-google:hover #google {
-    fill:#fff;
+.footer .icon:hover #facebook,
+.footer .icon:hover #linkedin,
+.footer .icon:hover #google {
+    fill: #fff;
 }
 
-.icon::before{
+.footer .icon::before {
     content: "";
     position: absolute;
-    width: 60px;
-    height: 60px;
-    align-items: center;
-    justify-items: center;
-    transform: translateX(-15px) translateY(-14px);
-    
+    inset: 0;
     border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.26);
-    transition: 0.3s ease-in-out;
+    border: 2px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.03);
+    transition: border-color 0.25s ease, background 0.25s ease;
 }
 
-.icon:hover::before {
-    border: 2px solid rgba(95, 164, 255, 0.459);
-    background: linear-gradient(30deg,  #18ACFF -20.84%, rgba(0, 0, 0, 0.25) 40.85%);;
+.footer .icon:hover::before {
+    border-color: rgba(95, 164, 255, 0.7);
+    background: linear-gradient(30deg, #18ACFF -20.84%, rgba(0, 0, 0, 0.25) 40.85%);
+}
+
+/* --- Canvas 3D en haut du footer, responsive --- */
+#threejs-container-2 {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: clamp(12rem, 35vh, 22rem);
+    pointer-events: none;
+    z-index: 0;
+}
+
+#threejs-container-2 canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
 }
 
 #fireflies-container {
@@ -196,7 +215,7 @@
     pointer-events: none;
     overflow: hidden;
     z-index: 1;
-  }
+}
   
   .firefly {
     position: absolute;
@@ -227,26 +246,40 @@
   }
   
 
-@media screen and (max-width:800px) {
-    .contact-us-f{
-        font-size: 0.85rem;
-        letter-spacing: 2px;
-        padding: 0 1rem;
+@media screen and (max-width: 800px) {
+    .footer.section {
+        padding: 4rem 1.25rem 4rem;
+        min-height: auto;
+    }
+
+    .title-footer {
+        font-size: clamp(1.1rem, 5vw, 1.5rem);
+    }
+
+    .footer::before {
+        width: 250px;
+        height: 270px;
+        right: -120px;
+        filter: blur(120px);
     }
 }
 
-@media screen and (max-width:680px) {
-    .title{
-        text-align: center;
+@media screen and (max-width: 680px) {
+    .footer.section {
+        padding: 3rem 1rem 3rem;
+        gap: 1.25rem;
     }
-    .title.title-footer{
-        font-size: 11px;
-        letter-spacing: 3px;
+
+    .title-footer {
+        letter-spacing: 1px;
     }
-    .contact-us-f{
-        font-size: 0.85rem;
-        letter-spacing: 2px;
-        padding: 0 1rem;
+
+    .icons-contact {
+        gap: 1.25rem;
+    }
+
+    .contact-us-f {
+        padding: 0;
     }
 }
 
@@ -260,6 +293,11 @@
 }
 .footer{
     padding-bottom:6rem;
+    margin-bottom: 0;
+}
+
+.footer .right::before {
+    background: none!important;
 }
 
 .prev , .next{
