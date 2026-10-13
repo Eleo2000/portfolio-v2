@@ -1041,6 +1041,8 @@ body.is-focus .flexa {
     justify-items: center;
     text-align: center;
     margin-bottom: clamp(2rem, 5vw, 4rem);
+    /* neutralise le line-height: 32px hérité de l'ancien .titre */
+    line-height: 1.2;
 }
 .tn-eyebrow {
     display: inline-flex;
@@ -1062,13 +1064,15 @@ body.is-focus .flexa {
 .tn-title {
     margin: 1.25rem 0 0;
     font-family: var(--rk-font-display);
-    font-size: clamp(2.5rem, calc(7vw), 6rem);
+    font-size: clamp(2rem, 8vw, 6rem);
     font-weight: 900;
-    line-height: 0.95;
+    line-height: 1;
     letter-spacing: -0.045em;
     color: var(--rk-title);
-    /* neutralise l'ancien .title générique */
-    padding-top: 0;
+    text-wrap: balance;
+    /* neutralise l'ancien .title générique (padding-top: 5rem,
+       padding-left: 10px en mobile ≤625px) */
+    padding: 0;
     z-index: auto;
 }
 .tn-title::before { content: none; }

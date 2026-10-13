@@ -73,6 +73,15 @@
     padding: 0;
 }
 
+/* rk.css charge après ce fichier : sans spécificité renforcée,
+   .tn-title (jusqu'à 6rem) écrase la taille du titre footer et le
+   compresse sur tablette/mobile */
+.title-footer.tn-title {
+    font-size: clamp(1.5rem, 4.5vw, 2.8rem);
+    letter-spacing: 2px;
+    line-height: 1.15;
+}
+
 .surligne {
     width: clamp(6rem, 15vw, 12rem);
     height: 4px;
@@ -256,8 +265,8 @@
         min-height: auto;
     }
 
-    .title-footer {
-        font-size: clamp(1.1rem, 5vw, 1.5rem);
+    .title-footer.tn-title {
+        font-size: clamp(1.4rem, 5.5vw, 2rem);
     }
 }
 
@@ -267,7 +276,7 @@
         gap: 1.25rem;
     }
 
-    .title-footer {
+    .title-footer.tn-title {
         letter-spacing: 1px;
     }
 

@@ -36,6 +36,14 @@
     align-self: center;
     justify-self: center;
 }
+
+@media screen and (max-width: 800px) {
+    .title-portfolio{
+        margin-bottom: 2.5rem;
+        padding: 0 1rem;
+        box-sizing: border-box;
+    }
+}
 /* ===== Carte projet — « spec sheet » éditoriale =================
    panneau visuel produit (dot-grid + halo + carte verre) /
    panneau contenu rythmé par des hairlines — même langage que le
