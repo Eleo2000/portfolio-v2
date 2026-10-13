@@ -141,14 +141,18 @@ nav #menu_btn.loading {
 }
 
 .flexa {
-	position: fixed;
-	top: 10px;
-	right: 10px;
-	z-index: 110;
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-	pointer-events: none;
+        position: fixed;
+        /* aligné sur .logo : même top (1.25rem), même inset (1.5rem) */
+        top: 1.25rem;
+        right: 1.5rem;
+        /* sous le drawer (z:10000) : le burger passe derrière le backdrop
+           quand le menu s'ouvre (comportement RECKLESS) — sinon son état
+           X is-open + le X du .menu-panel__close s'affichent en doublon */
+        z-index: 900;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        pointer-events: none;
 }
 .flexa > * {
 	pointer-events: all;

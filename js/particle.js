@@ -122,6 +122,7 @@ function init(){
 //animation loop
 function animate(){
     rafId = requestAnimationFrame(animate);
+    if (document.documentElement.dataset.theme !== 'dark') return;
     if (!isVisible) return;
     ctx.clearRect(0,0,canvas.width,canvas.height);
 

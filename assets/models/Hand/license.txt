@@ -1,0 +1,11 @@
+Model Information:
+* title:	Hand
+* source:	https://sketchfab.com/3d-models/hand-96facfa2b89942e7be78f0f0d193e75b
+* author:	phi (https://sketchfab.com/o0i0o)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Hand" (https://sketchfab.com/3d-models/hand-96facfa2b89942e7be78f0f0d193e75b) by phi (https://sketchfab.com/o0i0o) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

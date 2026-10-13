@@ -1,0 +1,174 @@
+{
+  "asset": {
+    "generator": "glTF-Transform v3.10.1",
+    "version": "2.0",
+    "extras": {
+      "author": "phi (https://sketchfab.com/o0i0o)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/hand-96facfa2b89942e7be78f0f0d193e75b",
+      "title": "Hand"
+    }
+  },
+  "accessors": [
+    {
+      "type": "SCALAR",
+      "componentType": 5123,
+      "count": 50094
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 9049
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 9049,
+      "max": [
+        2.963864326477051,
+        0.08483648300170898,
+        7.773804664611816
+      ],
+      "min": [
+        -3.2168350219726562,
+        -6.777307033538818,
+        -8.174910545349121
+      ]
+    },
+    {
+      "type": "VEC4",
+      "componentType": 5126,
+      "count": 9049
+    },
+    {
+      "type": "VEC2",
+      "componentType": 5126,
+      "count": 9049
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 88233
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9729,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "extensions": {
+        "EXT_texture_webp": {
+          "source": 0
+        }
+      }
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/webp",
+      "uri": "textures/Material.001_normal.webp"
+    }
+  ],
+  "buffers": [
+    {
+      "uri": "scene.bin",
+      "byteLength": 88233
+    }
+  ],
+  "materials": [
+    {
+      "name": "Material.001",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.6530612245,
+          0.6530612245,
+          0.6530612245,
+          1
+        ],
+        "roughnessFactor": 0.4,
+        "metallicFactor": 0
+      },
+      "normalTexture": {
+        "index": 0
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Object_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 2,
+            "TANGENT": 3,
+            "TEXCOORD_0": 4
+          },
+          "mode": 4,
+          "material": 0,
+          "indices": 0,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 0,
+              "attributes": {
+                "NORMAL": 0,
+                "POSITION": 1,
+                "TANGENT": 2,
+                "TEXCOORD_0": 3
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Sketchfab_model",
+      "rotation": [
+        -0.7071067811865475,
+        0,
+        0,
+        0.7071067811865476
+      ],
+      "children": [
+        1
+      ]
+    },
+    {
+      "name": "fdebff81b85c4da6a1cccef1c7f26da7.obj.cleaner.materialmerger.gles",
+      "children": [
+        2
+      ]
+    },
+    {
+      "name": "Object_2",
+      "mesh": 0
+    }
+  ],
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "scene": 0,
+  "extensionsUsed": [
+    "EXT_texture_webp",
+    "KHR_draco_mesh_compression"
+  ],
+  "extensionsRequired": [
+    "EXT_texture_webp",
+    "KHR_draco_mesh_compression"
+  ]
+}

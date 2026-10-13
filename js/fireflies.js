@@ -1,6 +1,7 @@
 const fireflyContainer = document.getElementById('fireflies-container');
 
 function createFirefly() {
+  if (document.documentElement.dataset.theme !== 'dark') return;
   const firefly = document.createElement('div');
   firefly.classList.add('firefly');
 

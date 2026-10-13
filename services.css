@@ -97,7 +97,7 @@
 }
 
 .service-desc{
-    color: rgba(245, 245, 220, 0.55);
+    color: var(--c-txt-dim);
     font-size: 0.82rem;
     text-align: center;
     margin: 0;
@@ -162,7 +162,7 @@
 }
 .se2:hover #etoile-0 , .se2:hover #etoile-1{
     stroke: none;
-    fill: beige;
+    fill: var(--c-principal);
 }
 
 

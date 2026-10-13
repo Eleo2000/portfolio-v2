@@ -1,157 +1,135 @@
+/* ===== Modal contact — carte glass ===================
+   ouverte via js/valid.js (display: grid en inline)
+   ================================================== */
 .contact_form{
     display: none;
-    grid-template-columns: 98vw;
-    grid-template-rows: 1fr;
-    align-items: center;
-    justify-items: center;
-    position: absolute;
-    z-index: 200;
-    transition: 0.25s ease-in-out;
-}
-
-.contact_form img{
-    width: 24px;
-    height: auto;
-}
-
-.contact_form p{
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-form{
-    display: grid;
-    font-size: 14px;
-    top:-30px;
     position: fixed;
-    margin-top: 3rem;
-    grid-column: 1/-1;
-    grid-row: 1/-1;
-    border: 1px solid rgb(61, 61, 61);
-    max-width: 550px;
-    width: 90%;
-    background: rgba(0, 0, 0, 0.192);
-    backdrop-filter: blur(50px);
-    padding: 30px;
+    inset: 0;
+    z-index: 200;
+    place-items: center;
+    padding: 1rem;
     box-sizing: border-box;
-    border-radius: 5px;
-    justify-items: center;
 }
 
-form img{
-    border-radius: 1rem;
+.contact_form form{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    width: min(430px, 100%);
+    margin: 0;
+    padding: 2.1rem 1.8rem 1.8rem;
+    box-sizing: border-box;
+    background: color-mix(in srgb, var(--rk-surface) 92%, transparent);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--rk-border);
+    border-radius: 20px;
+    box-shadow: 0 28px 70px rgba(6, 18, 30, 0.28);
+}
+
+.cf-eyebrow{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rk-accent-hover);
+}
+.cf-eyebrow::before{
+    content: "";
+    width: 20px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--rk-accent);
+}
+
+.cf-lead{
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--c-txt-dim);
+}
+
+.cf-links{
     display: grid;
-    justify-self: center;
+    gap: 0.6rem;
+    margin-top: 0.4rem;
 }
-
-form a , form p{
-    font-size: 14px;
+.cf-row{
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.72rem 0.95rem;
+    border-radius: 14px;
+    border: 1px solid var(--rk-border);
+    background: color-mix(in srgb, var(--rk-surface) 60%, transparent);
+    text-decoration: none;
+    transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
 }
-
+.cf-row:hover{
+    border-color: var(--rk-accent);
+    background: var(--rk-accent-soft);
+    transform: translateY(-1px);
+}
+.cf-ic{
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    color: var(--rk-accent-hover);
+    background: var(--rk-accent-soft);
+    border: 1px solid color-mix(in srgb, var(--rk-accent) 30%, var(--rk-border));
+}
+.cf-ic svg{ width: 16px; height: 16px; }
+.cf-txt strong{
+    display: block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-txt-dim);
+}
+.cf-val{
+    display: block;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--rk-title);
+}
 
 .contact-title{
-    color: rgb(207, 207, 207);
-    text-align: center;
-    
-}
-
-label{
-    display: block;
-    margin-top: 20px ;
-    color: beige;
-}
-
-input,textarea{
-    margin-top: 5px;
-    color: rgb(201, 201, 201);
-    width: 100%;
-    padding: 10px;
-    resize: none;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    border-bottom: 1px solid #777777;
-}
-/* input::placeholder{
-    color: red;
-} */
-
-input[type="text"]:focus , textarea:focus {
-    border-bottom:  1px solid rgb(0, 153, 255);
-}
-
-textarea::-webkit-scrollbar{
-    width: 5px;
-}
-.centre{
-    display: grid;
-    grid-template-rows: 35px;
-    grid-template-columns: 8rem 8rem;
-    grid-column-gap: 0rem;
-    align-content: center;
-    align-items: center;
-    justify-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-top: 10px;
-    padding-top: 10px;
-}
-input[class="back"]{
-    color: rgb(173, 173, 173);
-    font-weight: 700;
-    cursor: pointer;
-    width: 90%;
-    max-width: 100px;
-  
-    border: 1px solid rgba(255, 255, 255, 0.575);
-    
-    background-size: 200%;
-    transition: 0.1s ease-in-out;
-    border-radius: 5px ;
-    text-align: center;
-    
-}
-
-input[class="back"]:hover{
-    color: rgb(247, 104, 104);
-    border: 1.5px solid rgb(255, 109, 109);
-}
-input[type="submit"] {
-    cursor: pointer;
-    font-weight: 700;
-    width: 90%;
-    max-width: 100px;
-    color: rgb(36, 36, 36);
-    border: none;
-    background: linear-gradient(0deg,#276095,#5acaec) ;
-    background-size: 200%;
-    transition: 0.25s ease-in-out;
-    border-radius: 5px ;
-}
-input[type="submit"]:hover{
-    background-position: 10px  35px;
-    
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: var(--rk-title);
 }
 
 .close-contact {
     position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    font-size: 17px;
+    line-height: 1;
     background: none;
     border: none;
+    border-radius: 10px;
     cursor: pointer;
-    color: #333;
-    transition: color 0.2s ease;
-  }
-  .close-contact:hover {
-    color: #ffffff;
-  }
-
-@media screen and (max-width:425px){
-    form a , form p{
-        font-size: 10px!important;
-    }
+    color: var(--rk-muted);
+    transition: color 0.2s ease, background 0.2s ease;
+}
+.close-contact:hover {
+    color: var(--rk-accent-hover);
+    background: var(--rk-accent-soft);
 }
 @media screen and (max-width:768px){
     .boxes svg {

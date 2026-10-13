@@ -24,6 +24,10 @@ const starCanvas = document.getElementById("starfield");
   });
 
   function animateStars() {
+    if (document.documentElement.dataset.theme !== 'dark') {
+      requestAnimationFrame(animateStars);
+      return;
+    }
     ctx2.clearRect(0, 0, w, h);
 
     scrollBoost *= 0.94;

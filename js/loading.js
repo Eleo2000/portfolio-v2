@@ -1,28 +1,26 @@
 
-window.addEventListener("DOMContentLoaded", (event) => {
+/* lock du scroll pendant l'intro : en classe (pas en inline) pour que
+   les overlays puissent réutiliser `body.style.overflow` librement */
+document.body.classList.add("is-loading");
+
+window.addEventListener("DOMContentLoaded", () => {
+    const loader = document.querySelector(".loaderXd");
+    const cube = document.querySelector(".mini-container");
+    if (!loader) {
+        document.body.classList.remove("is-loading");
+        window.dispatchEvent(new Event("et-loader-done"));
+        return;
+    }
+
+    /* sortie en 2 temps : le cube se replie puis les 8 bandes du voile
+       remontent en cascade (~0.75s + stagger) — total ~1.8s */
+    setTimeout(() => { if (cube) cube.classList.add("is-out"); }, 400);
+    setTimeout(() => loader.classList.add("is-out"), 750);
     setTimeout(() => {
-        document.querySelector('.logoEvolutech').style.animation="disapearXd 0.01s ease-in-out forwards";
-
-        document.querySelector("#l0").style.animation="fondXdL0 1.6s ease-out  forwards";
-        document.querySelector("#r0").style.animation="fondXdR0 1.6s ease-out  forwards";
-        document.querySelector("#l1").style.animation="fondXdL0 1.6s ease-out 0.008s forwards";
-        document.querySelector("#r1").style.animation="fondXdR0 1.6s ease-out 0.0019s forwards";
-        /*à ameliorer xD */
-        // document.querySelector(".right").style.overflow="hidden"
-
-    },200);
-    
-    setTimeout(() => {
-        document.querySelector(".loaderXd").style.display="none";
-        document.querySelector(".loaderXd").style.zIndex="1";
-
-    
-    },700);
-
-    setTimeout(() => {
-        
-        document.querySelector("body").style.overflowY="initial"
-    
-    },700);
-    
+        loader.style.display = "none";
+        document.body.classList.remove("is-loading");
+        /* signal de fin de voile : le hero cale son intro dessus pour
+           laisser respirer la transition au lieu de jouer caché dessous */
+        window.dispatchEvent(new Event("et-loader-done"));
+    }, 1800);
 });

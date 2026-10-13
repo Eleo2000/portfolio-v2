@@ -1,0 +1,620 @@
+{
+  "asset": {
+    "generator": "glTF-Transform v3.10.1",
+    "version": "2.0",
+    "extras": {
+      "author": "TadenStar (https://sketchfab.com/tadenstar)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/mysterious-stone-2c46f3648b1a47b0a3824804aa4c89ef",
+      "title": "Mysterious stone"
+    }
+  },
+  "accessors": [
+    {
+      "type": "SCALAR",
+      "componentType": 5123,
+      "count": 13464
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 2553
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 2553,
+      "max": [
+        0.9728863835334778,
+        1.3933238983154297,
+        1.6440943479537964
+      ],
+      "min": [
+        -0.9729512333869934,
+        -1.3934688568115234,
+        -1.6440600156784058
+      ]
+    },
+    {
+      "type": "VEC2",
+      "componentType": 5126,
+      "count": 2553
+    },
+    {
+      "type": "SCALAR",
+      "componentType": 5123,
+      "count": 780
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 170
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 170,
+      "max": [
+        0.18159064650535583,
+        0.23706258833408356,
+        0.0998348593711853
+      ],
+      "min": [
+        -0.10151142627000809,
+        -0.241680309176445,
+        -0.08630885183811188
+      ]
+    },
+    {
+      "type": "VEC2",
+      "componentType": 5126,
+      "count": 170
+    },
+    {
+      "type": "SCALAR",
+      "componentType": 5123,
+      "count": 3840
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 1812
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 1812,
+      "max": [
+        2.9354124069213867,
+        -1.4021238088607788,
+        2.9386391639709473
+      ],
+      "min": [
+        -2.9352469444274902,
+        -1.645210862159729,
+        -2.9352469444274902
+      ]
+    },
+    {
+      "type": "VEC2",
+      "componentType": 5126,
+      "count": 1812
+    },
+    {
+      "type": "SCALAR",
+      "componentType": 5123,
+      "count": 1248
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 225
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 225,
+      "max": [
+        2.529858112335205,
+        -1.64536452293396,
+        2.529858112335205
+      ],
+      "min": [
+        -2.529858112335205,
+        -2.130551338195801,
+        -2.529858112335205
+      ]
+    },
+    {
+      "type": "VEC2",
+      "componentType": 5126,
+      "count": 225
+    },
+    {
+      "type": "SCALAR",
+      "componentType": 5123,
+      "count": 780
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 170,
+      "max": [
+        0.1052589863538742,
+        0.11012063920497894,
+        0.05188572406768799
+      ],
+      "min": [
+        -0.03599715232849121,
+        -0.12875214219093323,
+        -0.04099223017692566
+      ]
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 170
+    },
+    {
+      "type": "VEC2",
+      "componentType": 5126,
+      "count": 170
+    },
+    {
+      "type": "SCALAR",
+      "componentType": 5126,
+      "count": 500,
+      "max": [
+        20.83333396911621
+      ],
+      "min": [
+        0.0416666679084301
+      ],
+      "bufferView": 0,
+      "byteOffset": 0
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 500,
+      "bufferView": 0,
+      "byteOffset": 2000
+    },
+    {
+      "type": "VEC4",
+      "componentType": 5126,
+      "count": 500,
+      "bufferView": 0,
+      "byteOffset": 8000
+    },
+    {
+      "type": "VEC4",
+      "componentType": 5126,
+      "count": 500,
+      "bufferView": 0,
+      "byteOffset": 16000
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 24000
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 24000,
+      "byteLength": 16338
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 40338,
+      "byteLength": 1516
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 41854,
+      "byteLength": 8838
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 50692,
+      "byteLength": 2073
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 52765,
+      "byteLength": 1516
+    }
+  ],
+  "buffers": [
+    {
+      "uri": "scene.bin",
+      "byteLength": 54281
+    }
+  ],
+  "materials": [
+    {
+      "name": "MisteryRock",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.003438144294573975,
+          0.0033183803192857395,
+          0.003199013724733445,
+          1
+        ],
+        "roughnessFactor": 0.36044026533875684,
+        "metallicFactor": 0
+      },
+      "extensions": {
+        "KHR_materials_clearcoat": {
+          "clearcoatFactor": 0.792132559935307,
+          "clearcoatRoughnessFactor": 0.04
+        }
+      }
+    },
+    {
+      "name": "Kristall",
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          0.25
+        ]
+      },
+      "extensions": {
+        "KHR_materials_transmission": {
+          "transmissionFactor": 1
+        }
+      }
+    },
+    {
+      "name": "RockCircle",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.03564081245896186,
+          0.016744454378790925,
+          0.011253503285714683,
+          1
+        ],
+        "roughnessFactor": 0.6462084040153464,
+        "metallicFactor": 0
+      }
+    },
+    {
+      "name": "Platform",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.04999488099145083,
+          0.042594432062756954,
+          0.03756822069873261,
+          1
+        ],
+        "roughnessFactor": 0.555005806565371,
+        "metallicFactor": 0
+      }
+    },
+    {
+      "name": "Kristall_Emission",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.21283200000000002,
+          0.19334799999999996,
+          0.7999999999999999,
+          1
+        ]
+      },
+      "emissiveFactor": [
+        0.6009206088146277,
+        1,
+        1
+      ]
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Object_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 2,
+            "TEXCOORD_0": 3
+          },
+          "mode": 4,
+          "material": 0,
+          "indices": 0,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 1,
+              "attributes": {
+                "NORMAL": 0,
+                "POSITION": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Object_1",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 5,
+            "POSITION": 6,
+            "TEXCOORD_0": 7
+          },
+          "mode": 4,
+          "material": 1,
+          "indices": 4,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 2,
+              "attributes": {
+                "NORMAL": 0,
+                "POSITION": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Object_2",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 9,
+            "POSITION": 10,
+            "TEXCOORD_0": 11
+          },
+          "mode": 4,
+          "material": 2,
+          "indices": 8,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 3,
+              "attributes": {
+                "NORMAL": 0,
+                "POSITION": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Object_3",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 13,
+            "POSITION": 14,
+            "TEXCOORD_0": 15
+          },
+          "mode": 4,
+          "material": 3,
+          "indices": 12,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 4,
+              "attributes": {
+                "NORMAL": 0,
+                "POSITION": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Object_4",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 17,
+            "NORMAL": 18,
+            "TEXCOORD_0": 19
+          },
+          "mode": 4,
+          "material": 4,
+          "indices": 16,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 5,
+              "attributes": {
+                "POSITION": 0,
+                "NORMAL": 1,
+                "TEXCOORD_0": 2
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Sketchfab_model",
+      "rotation": [
+        -0.7071067811865475,
+        0,
+        0,
+        0.7071067811865476
+      ],
+      "scale": [
+        0.6841902136802673,
+        0.6841902136802673,
+        0.6841902136802673
+      ],
+      "children": [
+        1
+      ]
+    },
+    {
+      "name": "root",
+      "children": [
+        2
+      ]
+    },
+    {
+      "name": "GLTF_SceneRootNode",
+      "rotation": [
+        0.7071067811865475,
+        0,
+        0,
+        0.7071067811865476
+      ],
+      "children": [
+        3,
+        5,
+        7,
+        9,
+        11
+      ]
+    },
+    {
+      "name": "Cube_0",
+      "children": [
+        4
+      ]
+    },
+    {
+      "name": "Object_4",
+      "mesh": 0
+    },
+    {
+      "name": "Icosphere_2",
+      "children": [
+        6
+      ]
+    },
+    {
+      "name": "Object_6",
+      "mesh": 1
+    },
+    {
+      "name": "Cylinder_3",
+      "children": [
+        8
+      ]
+    },
+    {
+      "name": "Object_8",
+      "mesh": 2
+    },
+    {
+      "name": "Cylinder.001_4",
+      "children": [
+        10
+      ]
+    },
+    {
+      "name": "Object_10",
+      "mesh": 3
+    },
+    {
+      "name": "Icosphere.001_5",
+      "children": [
+        12
+      ]
+    },
+    {
+      "name": "Object_12",
+      "mesh": 4
+    }
+  ],
+  "animations": [
+    {
+      "name": "Action",
+      "samplers": [
+        {
+          "input": 20,
+          "output": 21,
+          "interpolation": "LINEAR"
+        },
+        {
+          "input": 20,
+          "output": 22,
+          "interpolation": "LINEAR"
+        }
+      ],
+      "channels": [
+        {
+          "sampler": 0,
+          "target": {
+            "node": 3,
+            "path": "translation"
+          }
+        },
+        {
+          "sampler": 1,
+          "target": {
+            "node": 3,
+            "path": "rotation"
+          }
+        }
+      ]
+    },
+    {
+      "name": "CubeAction",
+      "samplers": [
+        {
+          "input": 20,
+          "output": 21,
+          "interpolation": "LINEAR"
+        },
+        {
+          "input": 20,
+          "output": 23,
+          "interpolation": "LINEAR"
+        }
+      ],
+      "channels": [
+        {
+          "sampler": 0,
+          "target": {
+            "node": 3,
+            "path": "translation"
+          }
+        },
+        {
+          "sampler": 1,
+          "target": {
+            "node": 3,
+            "path": "rotation"
+          }
+        }
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "scene": 0,
+  "extensionsUsed": [
+    "KHR_materials_clearcoat",
+    "KHR_materials_transmission",
+    "KHR_draco_mesh_compression"
+  ],
+  "extensionsRequired": [
+    "KHR_draco_mesh_compression"
+  ]
+}

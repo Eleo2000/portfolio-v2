@@ -33,17 +33,10 @@ var items = document.querySelectorAll("[class*=revealL-]");
 })
 
 /********rectifier bug image accueil********/
-window.onload=() =>{
-    
-    var wid = innerWidth;
-    if(wid <420){
-        document.querySelector(".right").style.overflow="hidden";
-    }
-}
+const fixRightOverflow = () => {
+    const right = document.querySelector(".right");
+    if (right && innerWidth < 420) right.style.overflow = "hidden";
+};
 
-
-window.onresize = () =>{
-    if(innerWidth <420){
-        document.querySelector(".right").style.overflow="hidden";
-    }
-}
+window.onload = fixRightOverflow;
+window.onresize = fixRightOverflow;

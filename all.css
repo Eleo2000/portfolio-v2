@@ -1,5 +1,33 @@
 :root {
-    /*****Mbola ts vita tsara ito xD********/
+    /* ==== Design tokens (portés de RECKLESS-CUP) ==== */
+    --rk-bg: #ffffff;
+    --rk-ink: #0a1a26;
+    --rk-title: #2a4556;
+    --rk-surface: #ffffff;
+    --rk-elev: #ffffff;
+    --rk-shell: rgba(246, 250, 252, 0.95);
+    --rk-hero-bg: #e9eef4;
+    --rk-hero-bg2: #dfe7ef;
+    --rk-grid-line: rgba(10, 26, 38, 0.05);
+    --rk-grid-line2: rgba(10, 26, 38, 0.025);
+    --rk-muted: #5b7c8d;
+    --rk-accent: #3fc5ff;
+    --rk-accent-hover: #2ea8e0;
+    --rk-accent-soft: rgba(63, 197, 255, 0.14);
+    --rk-border: rgba(10, 26, 38, 0.14);
+    --rk-line: rgba(10, 26, 38, 0.08);
+    --rk-font-display: 'Orbitron', sans-serif;
+    --rk-font-body: 'League Spartan', sans-serif;
+    --rk-radius-sm: 6px;
+    --rk-radius-md: 8px;
+    --rk-radius-pill: 999px;
+    --rk-radius-round: 50%;
+
+    /* texte secondaire (remplace les rgba(245,245,220,x) hardcodés) */
+    --c-txt-strong: rgba(10, 26, 38, 0.88);
+    --c-txt: rgba(10, 26, 38, 0.75);
+    --c-txt-dim: rgba(91, 124, 141, 0.85);
+
     /******* Text ******/
     --text-small: 12px;
     --text-detail: 14px;
@@ -12,12 +40,12 @@
     /* ou 38px ou 42px;*/
   
   
-    /******** Couleur ******/
-    --c-principal: beige;
-    --c-fond: #171717 ;
-    --c-border: white;
-    --c-info-p:beige;
-    --c-border-p:beige;
+    /******** Couleur — mode clair permanent ******/
+    --c-principal: #0a1a26;
+    --c-fond: #ffffff ;
+    --c-border: rgba(10, 26, 38, 0.14);
+    --c-info-p:#5b7c8d;
+    --c-border-p:rgba(10, 26, 38, 0.2);
 
     /***partie accueil****/
     --c-right :#25B1FF; 
@@ -35,6 +63,54 @@
   
   }
 
+/* ==== Dark mode ==== */
+:root[data-theme='dark'] {
+    --c-principal: #e8f1f5;
+    --c-fond: #171717;
+    --c-border: rgba(255, 255, 255, 0.16);
+    --c-info-p: rgba(245, 245, 220, 0.72);
+    --c-border-p: rgba(245, 245, 220, 0.3);
+
+    --rk-bg: #10161e;
+    --rk-ink: #e8f1f5;
+    --rk-title: #d9e7f0;
+    --rk-surface: #16202b;
+    --rk-elev: #121b26;
+    --rk-shell: rgba(22, 32, 43, 0.95);
+    --rk-hero-bg: #0d1520;
+    --rk-hero-bg2: #080f18;
+    --rk-grid-line: rgba(255, 255, 255, 0.05);
+    --rk-grid-line2: rgba(255, 255, 255, 0.025);
+    --rk-muted: #7f96a8;
+    --rk-accent: #3fc5ff;
+    --rk-accent-hover: #6fd4ff;
+    --rk-accent-soft: rgba(63, 197, 255, 0.16);
+    --rk-border: rgba(255, 255, 255, 0.14);
+    --rk-line: rgba(255, 255, 255, 0.08);
+
+    --c-txt-strong: rgba(245, 245, 220, 0.88);
+    --c-txt: rgba(245, 245, 220, 0.85);
+    --c-txt-dim: rgba(245, 245, 220, 0.65);
+}
+
+/* ==== Calques d'effets : dark only (étoiles, particules, lucioles) ==== */
+.wrap, #starfield, #aurora, #fireflies-container { display: none; }
+:root[data-theme='dark'] .wrap,
+:root[data-theme='dark'] #starfield,
+:root[data-theme='dark'] #aurora { display: block; }
+:root[data-theme='dark'] #fireflies-container { display: block; }
+#starfield {
+    position: fixed; top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: -1; pointer-events: none;
+}
+#aurora {
+    position: absolute; top: -15%; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: -1; pointer-events: none;
+}
+
+
   /******* Appel variable *******
         var(--nom_var)
     */
@@ -43,7 +119,10 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    scroll-behavior: smooth;
+    /* PAS de scroll-behavior:smooth ici — chaque scrollTo de ScrollTrigger
+       (snap des pins) relancerait une animation CSS à chaque frame : le
+       snap ramperait au lieu de se poser. Le smooth des ancres est géré
+       en JS (nav.js, scrollIntoView). */
     user-select: none;
     font-family: 'League Spartan', sans-serif;
   }
@@ -51,10 +130,16 @@
   body {
     background-color:var(--c-fond);
     color: var(--c-principal);
-    letter-spacing: 2px;
-    overflow: hidden;
-    transition: 0.0001s;
+    letter-spacing: 0.01em;
+    transition: background 0.4s ease, color 0.4s ease;
 
+  }
+  /* scroll verrouillé UNIQUEMENT pendant le loader — via une classe
+     (jamais un overflow global) : les overlays (menu, modal, focus)
+     remettent `body.style.overflow = ''` qui doit toujours rendre le
+     scroll, sinon la scrollbar disparait apres fermeture/resize */
+  body.is-loading {
+    overflow: hidden;
   }
   a {
     text-decoration: none;
@@ -68,31 +153,11 @@
     overflow: initial;
   }
 
-  
-.s0{
-
-}
-
-.s1{
-    
-}
-.s2{
-  
-}
-.s3{
-
-}
-.s4{
-   
-}
-.s5{
- background: rgb(17, 17, 17);
-}
 
 .container{
     position: absolute;
     display: grid;
-    grid-template-rows:  80vh repeat(4 ,min-content ) ;
+    grid-template-rows:  minmax(80vh, auto) repeat(4 ,min-content ) ;
     grid-template-columns: 1fr repeat(8 , minmax(min-content , 14rem)) 1fr;
     justify-content: center;
     
@@ -221,13 +286,19 @@
 
 .logo{
     position: fixed;
-    top: 0.75rem;
+    /* même rangée que le burger : top + inset latéral identiques à
+       .flexa, et l'img (~28px) centrée dans un slot de 40px = la
+       hauteur du bouton, les deux sont optiquement alignés */
+    top: 1.25rem;
     left: 1.5rem;
+    height: 40px;
+    display: flex;
+    align-items: center;
     z-index: 5;
 }
 
 .logo img{
-    width: 60px;
+    width: 42px;
     margin-top: 0;
 }
 
@@ -269,148 +340,98 @@
 }
 
 
-/* debut anim loader evolutech */
+/* debut loader evolutech — recette reckless : mini-cube 3D sur voile
+   de 8 bandes qui remontent en cascade (centre → bords) à la sortie */
 .loaderXd{
-  
-    
-}
-.loaderXd .logoEvolutech{
-
     position: fixed;
-    transform: scale(0.1);
-    z-index: 999999999999999999999999;
+    inset: 0;
+    z-index: 1000000;
 }
-.loaderXd{
-    position: relative;
-    z-index: 9999999999999999999999999999999999999;
+.loaderXd.is-out{
+    pointer-events: none;
 }
-.loaderXd .fondOpening{
-    
+
+.loader-grid{
     position: absolute;
-    top: 0%;
-    left: 0%;
-    transform: scale(1);
-    z-index: 0;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+}
+.loader-bar{
+    background: var(--rk-elev);
+    width: calc(100% + 1px);
+    transform: translateY(0);
+    will-change: transform;
+}
+.loaderXd.is-out .loader-bar{
+    transform: translateY(-101%);
+    transition: transform .75s cubic-bezier(.22, 1, .36, 1);
+}
+/* cascade centre → extérieur */
+.loaderXd.is-out .loader-bar:nth-child(4),
+.loaderXd.is-out .loader-bar:nth-child(5){ transition-delay: 0s; }
+.loaderXd.is-out .loader-bar:nth-child(3),
+.loaderXd.is-out .loader-bar:nth-child(6){ transition-delay: .07s; }
+.loaderXd.is-out .loader-bar:nth-child(2),
+.loaderXd.is-out .loader-bar:nth-child(7){ transition-delay: .14s; }
+.loaderXd.is-out .loader-bar:nth-child(1),
+.loaderXd.is-out .loader-bar:nth-child(8){ transition-delay: .21s; }
+
+.mini-container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150px;
+    height: 150px;
+    transform: translate(-50%, -50%) scale(0.42);
+    transform-origin: 50% 50%;
+    perspective: 1000px;
+    transition: transform .45s ease-in, opacity .45s ease-in;
+}
+.mini-container.is-out{
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
 }
 
-
-#ab0, #ab1, #ab2{
-    transform-origin: center;
+.mini-cube{
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    animation: mini-cube3d 1.8s ease-in-out infinite;
 }
 
-#ab2{
-    animation: charge1 0.6s ease-in-out 0.4s infinite ;
-    transform:rotate(20deg) translateY(0px);
-}
-#ab0{
-    animation: charge0 0.6s ease-in-out 0.4s infinite ;
-    transform: translateX(5px) rotate(20deg) translateY(5px);
-}
-#ab1{
-    animation: charge2 0.6s ease-in-out 0.4s infinite ;
-    transform:rotate(20deg) translateY(0px);
+@keyframes mini-cube3d {
+    0%   { transform: rotateX(-50deg) rotateY(-20deg) translateY(20px) scale3d(0.97, 0.97, 0.97); }
+    25%  { transform: rotateX(-50deg) rotateY(70deg)  translateY(38px) scale3d(0.6, 0.7, 0.6); }
+    50%  { transform: rotateX(-50deg) rotateY(160deg) translateY(15px) scale3d(0.7, 0.8, 0.7); }
+    75%  { transform: rotateX(-50deg) rotateY(250deg) translateY(45px) scale3d(0.6, 0.6, 0.6); }
+    100% { transform: rotateX(-50deg) rotateY(340deg) translateY(20px) scale3d(0.97, 0.97, 0.97); }
 }
 
+.mini-face{
+    position: absolute;
+    box-sizing: border-box;
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, var(--rk-accent), var(--rk-accent-hover));
+    border: 1px solid color-mix(in srgb, var(--rk-accent-hover) 70%, #ffffff);
+}
+.mini-front  { transform: translateZ(74px); }
+.mini-back   { transform: translateZ(-74px); }
+.mini-left   { right: 74px; transform: rotateY(-90deg); }
+.mini-right  { left: 74px;  transform: rotateY(90deg); }
+.mini-top    { bottom: 74px; transform: rotateX(90deg); }
+.mini-bottom { top: 74px;    transform: rotateX(-90deg); }
 
-@keyframes charge0 {
-    0%{
-        transform: translateX(5px)  rotate(20deg) translateY(5px);
+@media (prefers-reduced-motion: reduce) {
+    .mini-cube {
+        animation-play-state: paused;
     }
-    100%{
-        transform: translateX(5px) rotate(20deg) translateY(-30px);
+    .loaderXd.is-out .loader-bar {
+        transition-duration: .01ms;
     }
 }
-@keyframes charge1 {
-    0%{
-        transform: rotate(20deg) translateY(0px);
-    }
-    100%{
-        transform: rotate(20deg) translateY(-35px);
-    }
-}
-@keyframes charge2 {
-    0%{
-        transform: rotate(20deg) translateY(0px);
-    }
-    100%{
-        transform: rotate(20deg) translateY(-30px);
-    }
-}
-
-.logoEvolutech{
-    /* animation: disapearXd 3.05s ease-in-out forwards; */
-}
-
-@keyframes disapearXd {
-    0%{
-        opacity: 1;
-    }
-    90%{
-        opacity: 0.9;
-    }
-    100%{
-        opacity: 0;
-    }
-}
-
-
 /* fin loader evolutech */
-
-/*debut opening evolutech*/
-
-.loaderXd .fondOpening{
-   
-    position: absolute;
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    z-index: 0;
-    transform: scaleY(2) scaleX(2) rotate(10deg) ;
-}
-
-
-#l0{
-    fill: #060c1a;
-    transform-origin: center;
-    position: absolute;
-    /* animation: fondXdL0 0.75s ease-out 3s forwards; */
-    transform: scaleY(2) scaleX(2) rotate(10deg)  ;
-}
-#r0{
-    fill: #060c1a;
-    transform-origin: center;
-    position: absolute;
-    transform: scaleY(2) scaleX(2)  rotate(10deg) ;
-    /* animation: fondXdR0 0.75s ease-out 3s forwards; */
-}
-
-#l1{
-    transform-origin: center;
-    position: absolute;
-    /* animation: fondXdL0 0.75s ease-out 3.02s forwards; */
-    transform: scaleY(2) scaleX(2)   rotate(10deg);
-}
-
-#r1{
-    transform-origin: center;
-    position: absolute;
-    /* animation: fondXdR0 0.75s ease-out 3.02s forwards; */
-    transform: scaleY(2) scaleX(2)  rotate(10deg) ;
-    
-}
-
-@keyframes fondXdL0 {
-    100%{
-        transform: scaleY(2) scaleX(2) rotate(10deg)  translateX(-600px);
-    }
-}
-
-@keyframes fondXdR0 {
-    100%{
-        transform: scaleY(2) scaleX(2) rotate(10deg)  translateX(600px);
-    }
-}
-/* fin opening evolutech */
 
 .blur-active{
     
@@ -613,25 +634,6 @@ height: 30px;
     font-family: 'League Spartan', sans-serif!important;
 }
 
-#starfield {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    pointer-events: none;
-}
-
-#aurora {
-    position: absolute;
-    top: -15%;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    pointer-events: none;
-}
 
 
 /*****cards ***/
@@ -649,8 +651,8 @@ height: 30px;
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0,0,0,0.95);
-    color: white;
+    background: rgba(255,255,255,0.95);
+    color: #0a1a26;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -673,14 +675,14 @@ height: 30px;
     font-size: 2.5rem;
     margin-bottom: 1rem;
     text-align: center;
-    color: #5acaec;
+    color: #2ea8e0;
   }
   .card-fullscreen p {
     font-size: 1.2rem;
     max-width: 600px;
     text-align: center;
     margin: 0.5rem 0 30px;
-    color: #e0e0ff;
+    color: #5b7c8d;
     line-height: 1.6;
   }
   #closeCard {
@@ -714,10 +716,10 @@ height: 30px;
     position: fixed;
     top: 100px;
     left: 20px;
-    background: rgba(10, 10, 20, 0.85);
+    background: rgba(255, 255, 255, 0.9);
     padding: 1rem;
     border-radius: 8px;
-    color: #fff;
+    color: #0a1a26;
     max-width: 260px;
     pointer-events: none;
     transition: opacity 0.3s ease;

@@ -16,10 +16,7 @@
     overflow-x: hidden;
     
 }
-.logo:hover{
-    transition:.25s;
-    filter: brightness(0.8);
-}
+
 
 .title-evolutech{
     
@@ -596,7 +593,10 @@
    ===================================================== */
 
 /* --- reveal depuis le bas --- */
-[class*=reveal-]{
+/* scope : exclut les classes portées de RECKLESS (reveal-mask, reveal-in,
+   story__reveal-in) — elles sont pilotées par GSAP, pas par reveal.js,
+   et ce wildcard leur imposait opacity:0 + translateY(20px) à vie */
+[class*=reveal-]:not([class*=reveal-mask]):not([class*=reveal-in]){
     opacity: 0;
     transform: translateY(20px);
     transition: 0.3s ease-out;
