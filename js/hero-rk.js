@@ -372,7 +372,7 @@ window.addEventListener('DOMContentLoaded', () => {
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
         renderer.setSize(w, h);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     };
     const heroResizeObs = new ResizeObserver(onResize);
     heroResizeObs.observe(host);
@@ -466,6 +466,8 @@ window.addEventListener('DOMContentLoaded', () => {
     let inViewport = true;
     const viewportIO = new IntersectionObserver(([entry]) => {
         inViewport = entry.isIntersecting;
+        // la chaine RAF s'arrête hors viewport : on la relance au retour
+        if (inViewport && frame == null && !disposed) frame = window.requestAnimationFrame(tick);
     }, { threshold: 0.02 });
     if (canvas.parentElement) viewportIO.observe(canvas.parentElement);
 
@@ -473,7 +475,7 @@ window.addEventListener('DOMContentLoaded', () => {
         if (disposed) return;
         if (!inViewport) {
             clock.getDelta();
-            frame = window.requestAnimationFrame(tick);
+            frame = null; // on ne schedule plus : zéro frame gâchée cachée
             return;
         }
         const delta = Math.min(clock.getDelta(), 0.05);
@@ -530,7 +532,9 @@ window.addEventListener('DOMContentLoaded', () => {
         scene.updateMatrixWorld(true);
         updateInkBounds();
         renderer.render(scene, camera);
-        tick();
+        // ne démarrer la boucle que si aucune chaine ne tourne déjà —
+        // l'IO peut avoir kické tick() avant la fin du chargement
+        if (frame == null) tick();
         modelReady = true;
         maybePlayIntro();
     };

@@ -184,7 +184,7 @@ const createViewer = (host, gltfPath, initialProgress) => {
     host.appendChild(canvas);
 
     const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setClearColor(0x000000, 0);
 
     const scene = new THREE.Scene();
@@ -236,7 +236,13 @@ const createViewer = (host, gltfPath, initialProgress) => {
     resize();
 
     // IntersectionObserver : on ne rend que quand visible
-    new IntersectionObserver(([entry]) => { viewer.visible = entry.isIntersecting; }, { threshold: 0.05 }).observe(host);
+    new IntersectionObserver(([entry]) => {
+        viewer.visible = entry.isIntersecting;
+        // la boucle s'arrête hors viewport : relance au retour si active
+        if (viewer.visible && viewer.running && viewer.rafId === null) {
+            viewer.rafId = requestAnimationFrame(loop);
+        }
+    }, { threshold: 0.05 }).observe(host);
 
     gltfLoader.load(gltfPath, (gltf) => {
         if (viewer.disposed) return;
@@ -278,6 +284,9 @@ const createViewer = (host, gltfPath, initialProgress) => {
     // boucle : wobble rotation + bob y (port des springs de ModelViewer2)
     const loop = () => {
         if (viewer.disposed) return;
+        // zéro frame gâchée : hors viewport OU inactif = boucle stoppée,
+        // relancée par l'IO ou setRunning
+        if (!viewer.visible || !viewer.running) { viewer.rafId = null; return; }
         viewer.rafId = requestAnimationFrame(loop);
         const t = viewer.clock.getElapsedTime();
         if (viewer.model) {
@@ -299,10 +308,8 @@ const createViewer = (host, gltfPath, initialProgress) => {
             api.root.updateMatrixWorld(true);
             api.rootInverse.value.copy(api.root.matrixWorld).invert();
         }
-        if (viewer.visible && viewer.running) {
-            controls.update();
-            renderer.render(scene, camera);
-        }
+        controls.update();
+        renderer.render(scene, camera);
     };
     const maxDimRef = { value: 1 };
     loop();
@@ -311,7 +318,12 @@ const createViewer = (host, gltfPath, initialProgress) => {
         set: (v) => { api.tween?.kill(); api.progress.value = v; },
         erase: (d = 0.85) => tweenInk(api, 0, d),
         reveal: (d = 1.05) => tweenInk(api, 1, d),
-        setRunning: (v) => { viewer.running = v; },
+        setRunning: (v) => {
+            viewer.running = v;
+            if (v && viewer.visible && viewer.rafId === null) {
+                viewer.rafId = requestAnimationFrame(loop);
+            }
+        },
     };
 };
 

@@ -31,7 +31,8 @@ try {
   scrollSection.style.display = 'none';
   throw err;
 }
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+// DPR 1.5 : à 2 la canvas fait 4x les pixels pour un gain invisible
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
 scene.add(new THREE.AmbientLight(0xffffff, 0.95));
 const accentLight = new THREE.PointLight(new THREE.Color(accentHex()), 1.2, 20);
@@ -168,10 +169,8 @@ const accentRGB = (() => {
         return c;
     };
 })();
-const accentSoft = () => `rgba(${accentRGB()}, 0.55)`;
-// accent saturé (--rk-accent brut) + fond de tuile légèrement teinté :
-// la version éclaircie à 40% rendait la bordure quasi transparente
-// en mode preview, et le blanc #fbfdff paraissait "incolore"
+const accentSoft = () => `rgba(${accentRGB()}, 0.4)`;
+// fond de tuile légèrement teinté (accent brut à 8% de blanc)
 const accentRawRGB = (() => {
     let c;
     return () => {
@@ -182,7 +181,9 @@ const accentRawRGB = (() => {
         return c;
     };
 })();
-const accentStrong = () => `rgb(${accentRawRGB()})`;
+// liseré "bleu ciel" : version déjà éclaircie à 40% — l'accent brut
+// saturé rendait un bord trop dur sur les photos
+const accentStrong = () => `rgb(${accentRGB()})`;
 const tileBg = () => `rgb(${accentRawRGB().map((x) => Math.round(255 - (255 - x) * 0.08))})`;
 
 const cards = [];
@@ -209,9 +210,9 @@ data.forEach((d) => {
       context.beginPath();
       context.roundRect(m, m, w - 2 * m, h - 2 * m, r);
       if (full) {
-        // mode preview : plein cadre SANS bordure ni tuile — fond blanc
-        // pur, puis la photo entière en contain par-dessus
-        context.fillStyle = '#ffffff';
+        // mode preview : plein cadre SANS bordure — fond teinté tuile
+        // (plus de bande blanche dure autour de la photo)
+        context.fillStyle = tileBg();
         context.fill();
         context.clip();
       } else {
@@ -286,9 +287,9 @@ data.forEach((d) => {
     };
     mainGroup.add(card);
     cards.push(card);
-    // le titre est bake en canvas : on attend Orbitron pour que
-    // measureText/fillText utilisent ses vraies metriques
-    Promise.resolve(document.fonts?.load('700 88px Orbitron'))
+    // le titre est bake en canvas : on attend JetBrains Mono (meme
+    // font que le <Eleo/> 3D du hero) pour les vraies metriques
+    Promise.resolve(document.fonts?.load('700 88px "JetBrains Mono"'))
       .catch(() => {})
       .then(() => {
         const label = createTextLabel(d.title);
@@ -302,26 +303,25 @@ data.forEach((d) => {
   };
 });
 
-// Orbitron est tres large : on mesure puis on reduit la fonte pour
-// rentrer dans la zone sure (porté de CardSimple createTextLabel)
-function createTextLabel(text, color = '#4a6478') {
+// JetBrains Mono (meme font que le <Eleo/> 3D) : on mesure puis on
+// reduit la fonte pour rentrer dans la zone sure
+function createTextLabel(text, color = '#0a1a26') {
   const labelCanvas = document.createElement('canvas');
   labelCanvas.width = 1024;
   labelCanvas.height = 256;
   const ctx = labelCanvas.getContext('2d');
   let size = 88;
-  ctx.font = `bold ${size}px Orbitron, Arial`;
+  ctx.font = `700 ${size}px "JetBrains Mono", monospace`;
   const max = labelCanvas.width - 96;
   const w = ctx.measureText(text).width;
   if (w > max) {
     size = Math.max(44, Math.floor(size * (max / w)));
-    ctx.font = `bold ${size}px Orbitron, Arial`;
+    ctx.font = `700 ${size}px "JetBrains Mono", monospace`;
   }
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-  ctx.fillText(text, 516, 132);
-  ctx.fillText(text, 508, 124);
+  // un seul trace net : l'ancien double fillText blanc decalé
+  // ajoutait un "top border" blanc autour des lettres
   ctx.fillStyle = color;
   ctx.fillText(text, 512, 128);
 
@@ -744,6 +744,7 @@ window.addEventListener('resize', resize);
 let isVisible = true;
 let isInViewport = true;
 let rafId;
+let lastT = 0;
 
 // Pause quand l'onglet est caché
 document.addEventListener('visibilitychange', () => {
@@ -761,12 +762,15 @@ if (scrollSection) {
 }
 
 function animate(t=0) {
+  // garde AVANT le schedule : sinon la chaine RAF continue en no-op et
+  // chaque retour dans le viewport (rafId===null) spawn une chaine de
+  // plus -> renders empiles a chaque passage de la section
+  if (!isVisible || !isInViewport) { rafId = null; return; }
   rafId = requestAnimationFrame(animate);
-
-  if (!isVisible || !isInViewport) {
-    rafId = null;
-    return;
-  }
+  // la vague ambiante n'a pas besoin de 60fps — ~45fps suffit et divise
+  // le coût GPU par ~1.3 ; pendant un focus (vol/hover) on reste fluide
+  if (focus.phase === 'idle' && t - lastT < 22) return;
+  lastT = t;
 
   if (focus.phase === 'idle') theta = scr.v;
   updateCards();
@@ -777,4 +781,5 @@ function animate(t=0) {
   });
   renderer.render(scene, camera);
 }
-animate();
+// garde : l'IntersectionObserver peut déjà avoir démarré la boucle
+if (rafId == null) animate();

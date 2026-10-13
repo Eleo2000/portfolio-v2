@@ -30,10 +30,10 @@ uniform vec2 uMouse;
 
 #define PI 3.14159265359
 #define TAU 6.28318530718
-#define MAX_STEPS 80
+#define MAX_STEPS 48
 #define MAX_DIST 50.0
 #define SURF_DIST 0.001
-#define SAT_COUNT 4
+#define SAT_COUNT 3
 
 float hash(float n) {
     return fract(sin(n) * 43758.5453123);
@@ -276,6 +276,16 @@ void main() {
     /* ---------- WebGL ---------- */
     const gl = canvas.getContext('webgl', { alpha: false, antialias: false, powerPreference: 'high-performance' });
     if (gl) {
+        // GPU faible -> shader léger : pointer:coarse/<4 cores couvrent le
+        // mobile, mais un desktop sur iGPU/logiciel prenait quand même le
+        // raymarcher 80-step plein écran (la cause des lags)
+        let weakGPU = compactGPU;
+        try {
+            const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+            const rn = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : '';
+            if (/swiftshader|llvmpipe|softpipe|software|basic render/i.test(rn)) weakGPU = true;
+            if ((navigator.hardwareConcurrency || 8) < 6) weakGPU = true;
+        } catch (e) { /* fallback : compactGPU */ }
         const compile = (type, src) => {
             const sh = gl.createShader(type);
             gl.shaderSource(sh, src);
@@ -288,7 +298,7 @@ void main() {
         };
 
         const vs = compile(gl.VERTEX_SHADER, VERTEX_SRC);
-        const fs = compile(gl.FRAGMENT_SHADER, compactGPU ? FRAGMENT_SRC_MOBILE : FRAGMENT_SRC);
+        const fs = compile(gl.FRAGMENT_SHADER, weakGPU ? FRAGMENT_SRC_MOBILE : FRAGMENT_SRC);
         const program = gl.createProgram();
         if (vs && fs) {
             gl.attachShader(program, vs);
@@ -312,7 +322,7 @@ void main() {
             const resize = () => {
                 const r = canvas.getBoundingClientRect();
                 if (r.width === 0 || r.height === 0) return;
-                const dpr = Math.min(window.devicePixelRatio || 1, compactGPU ? 0.75 : 1.5);
+                const dpr = Math.min(window.devicePixelRatio || 1, weakGPU ? 0.75 : 1.0);
                 canvas.width = Math.round(r.width * dpr);
                 canvas.height = Math.round(r.height * dpr);
                 gl.viewport(0, 0, canvas.width, canvas.height);
@@ -335,7 +345,8 @@ void main() {
             let visible = false;
             const start = performance.now();
             const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const frameMs = compactGPU ? 40 : 0; // tactile : ~25fps
+            // fond ambiant : 30fps suffisent — divise le coût par ~2
+            const frameMs = weakGPU ? 40 : 33; // tactile : ~25fps
             let lastT = 0;
 
             const tick = () => {
