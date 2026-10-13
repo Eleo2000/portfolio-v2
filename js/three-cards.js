@@ -156,21 +156,8 @@ const data = [
 // Create cards — pipeline CardSimple : canvas 1536×(1536/ratio) plein
 // cadre (pas de letterboxing), redraw(full) = texture miroir pour le
 // flip face caméra en mode focus.
-// bleu clair dérivé de --rk-accent (mix 40% blanc) : l'accent brut
-// rendait un liseré trop foncé — la tuile RECKLESS a un bord pâle
-const accentRGB = (() => {
-    let c;
-    return () => {
-        if (c) return c;
-        const v = getComputedStyle(document.documentElement).getPropertyValue('--rk-accent').trim();
-        const n = /^#[0-9a-fA-F]{6}$/.test(v) ? parseInt(v.slice(1), 16) : 0x3fc5ff;
-        const l = (x) => Math.round(x + (255 - x) * 0.4);
-        c = [l(n >> 16 & 255), l(n >> 8 & 255), l(n & 255)];
-        return c;
-    };
-})();
-const accentSoft = () => `rgba(${accentRGB()}, 0.4)`;
-// fond de tuile légèrement teinté (accent brut à 8% de blanc)
+// fond de tuile légèrement teinté (accent brut à 8% de blanc) —
+// plus de liseré ni halo : la photo seule fait le visuel
 const accentRawRGB = (() => {
     let c;
     return () => {
@@ -181,9 +168,6 @@ const accentRawRGB = (() => {
         return c;
     };
 })();
-// liseré "bleu ciel" : version déjà éclaircie à 40% — l'accent brut
-// saturé rendait un bord trop dur sur les photos
-const accentStrong = () => `rgb(${accentRGB()})`;
 const tileBg = () => `rgb(${accentRawRGB().map((x) => Math.round(255 - (255 - x) * 0.08))})`;
 
 const cards = [];
@@ -230,18 +214,6 @@ data.forEach((d) => {
       if (ir > tr) { dw = iw; dh = iw / ir; } else { dh = ih; dw = ih * ir; }
       context.drawImage(image, inset + (iw - dw) / 2, inset + (ih - dh) / 2, dw, dh);
       context.restore();
-      if (!full) {
-        // liseré bleu accent + halo doux (le "bord glow" RECKLESS)
-        context.save();
-        context.beginPath();
-        context.roundRect(m, m, w - 2 * m, h - 2 * m, r);
-        context.strokeStyle = accentStrong();
-        context.lineWidth = Math.max(8, Math.round(w * 0.008));
-        context.shadowColor = accentSoft();
-        context.shadowBlur = Math.round(w * 0.03);
-        context.stroke();
-        context.restore();
-      }
     };
     paint();
 
