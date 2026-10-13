@@ -36,6 +36,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let loaderDone = !document.querySelector('.loaderXd');
     window.addEventListener('et-loader-done', () => {
         loaderDone = true;
+        maybePlayCopyIntro();
         maybePlayIntro();
     });
 
@@ -57,17 +58,27 @@ window.addEventListener('DOMContentLoaded', () => {
             .to('.hero-signal', { autoAlpha: 1, x: 0, duration: 0.8 }, 0.7);
     };
 
+    /* le copy ne dépend QUE du loader + visibilité — avant il attendait
+       aussi modelReady, donc le LCP (.hero-description) restait masqué
+       jusqu'à l'arrivée des GLB (ou le filet de 4s) */
+    let copyPlayed = false;
+    const maybePlayCopyIntro = () => {
+        if (copyPlayed || !inView || !loaderDone) return;
+        copyPlayed = true;
+        playCopyIntro();
+    };
+
     const maybePlayIntro = () => {
         if (!modelReady || !inView || introPlayed || !loaderDone) return;
         introPlayed = true;
-        // le copy DOM d'abord : il ne doit jamais dépendre de la 3D —
-        // un throw dans intro3d ne peut plus laisser le hero vide
-        playCopyIntro();
+        // filet : le copy doit déjà avoir joué via et-loader-done
+        maybePlayCopyIntro();
         try { intro3d?.(); } catch (err) { console.warn('hero intro3d skipped', err); }
     };
 
     const heroIO = new IntersectionObserver(([entry]) => {
         inView = entry.isIntersecting;
+        maybePlayCopyIntro();
         maybePlayIntro();
     }, { threshold: 0.25 });
     heroIO.observe(hero);

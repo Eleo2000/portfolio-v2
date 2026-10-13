@@ -134,6 +134,12 @@
     transition: background 0.4s ease, color 0.4s ease;
 
   }
+  /* la gouttière de scrollbar est toujours réservée : quand le loader ou
+     un overlay masque puis rend la scrollbar, la page ne glisse pas de
+     ~15px — c'était la source du CLS massif à la fin du chargement */
+  html {
+    scrollbar-gutter: stable;
+  }
   /* scroll verrouillé UNIQUEMENT pendant le loader — via une classe
      (jamais un overflow global) : les overlays (menu, modal, focus)
      remettent `body.style.overflow = ''` qui doit toujours rendre le

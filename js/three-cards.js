@@ -47,7 +47,12 @@ scene.add(mainGroup);
 
 // Load GLTF model at center
 let gltfModel;
-new GLTFLoader().load('assets/3d/space_exploration_wlp_series_8/scene.gltf', gltf => {
+const modelBounds = new THREE.Sphere();
+const modelWorldBounds = new THREE.Sphere();
+const viewFrustum = new THREE.Frustum();
+const viewProjection = new THREE.Matrix4();
+new GLTFLoader().load('assets/3d/space_exploration_wlp_series_8/scene-optimized.glb', gltf => {
+  new THREE.Box3().setFromObject(gltf.scene).getBoundingSphere(modelBounds);
   gltf.scene.scale.set(1, 1, 1);
   gltf.scene.position.set(0, -3.5, 0);
   mainGroup.add(gltf.scene);
@@ -68,11 +73,16 @@ const vertexShader = `
   uniform float time;
   uniform float amp;
   varying vec2 vUv;
+  varying vec2 vWave;
   float wave(float x, float y, float t) {
     return sin(x * 3.0 + t) * 0.3 + cos(y * 4.0 + t * 1.5) * 0.15 + sin((x + y) * 5.0 + t * 0.5) * 0.1;
   }
   void main() {
     vUv = uv;
+    vWave = vec2(
+      sin((uv.y + time * 0.7) * 10.0),
+      cos((uv.x + time * 0.9) * 12.0)
+    ) * (0.005 * amp);
     vec3 p = position;
     p.z += wave(p.x, p.y, time) * amp;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
@@ -88,11 +98,10 @@ const fragmentShader = `
   uniform float dim;
   uniform float fade;
   varying vec2 vUv;
+  varying vec2 vWave;
   void main() {
-    float wx = sin((vUv.y + time * 0.7) * 10.0) * 0.005 * amp;
-    float wy = cos((vUv.x + time * 0.9) * 12.0) * 0.005 * amp;
     vec2 faceUv = vec2(gl_FrontFacing ? 1.0 - vUv.x : vUv.x, vUv.y);
-    vec2 uv = faceUv + vec2(wx, wy);
+    vec2 uv = faceUv + vWave;
     vec4 texColor = texture2D(map, uv);
     if (dim > 0.001) {
       // flou 3x3 sur les cartes en arriere-plan pendant le focus
@@ -259,9 +268,9 @@ data.forEach((d) => {
     };
     mainGroup.add(card);
     cards.push(card);
-    // le titre est bake en canvas : on attend JetBrains Mono (meme
-    // font que le <Eleo/> 3D du hero) pour les vraies metriques
-    Promise.resolve(document.fonts?.load('700 88px "JetBrains Mono"'))
+    // le titre est bake en canvas : on attend League Spartan (meme
+    // font body du site) pour les vraies metriques
+    Promise.resolve(document.fonts?.load('700 88px "League Spartan"'))
       .catch(() => {})
       .then(() => {
         const label = createTextLabel(d.title);
@@ -275,20 +284,20 @@ data.forEach((d) => {
   };
 });
 
-// JetBrains Mono (meme font que le <Eleo/> 3D) : on mesure puis on
-// reduit la fonte pour rentrer dans la zone sure
+// League Spartan (font body du site) : on mesure puis on reduit la
+// fonte pour rentrer dans la zone sure
 function createTextLabel(text, color = '#0a1a26') {
   const labelCanvas = document.createElement('canvas');
   labelCanvas.width = 1024;
   labelCanvas.height = 256;
   const ctx = labelCanvas.getContext('2d');
-  let size = 88;
-  ctx.font = `700 ${size}px "JetBrains Mono", monospace`;
+  let size = 96;
+  ctx.font = `700 ${size}px "League Spartan", sans-serif`;
   const max = labelCanvas.width - 96;
   const w = ctx.measureText(text).width;
   if (w > max) {
     size = Math.max(44, Math.floor(size * (max / w)));
-    ctx.font = `700 ${size}px "JetBrains Mono", monospace`;
+    ctx.font = `700 ${size}px "League Spartan", sans-serif`;
   }
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -347,9 +356,12 @@ const camWorldDir = new THREE.Vector3();
 const qHelix = new THREE.Quaternion();
 const qParentW = new THREE.Quaternion();
 let coverScale = 4.2;
+let lastProgress = -1;
 
 function updateCards() {
   cards.forEach((card, index) => {
+    card.visible = card.userData.uniforms.fade.value < 0.999;
+    if (!card.visible) return;
     const angle = theta + index * ((2 * Math.PI) / cards.length);
     const hx = radius * Math.cos(angle);
     const hy = pitch * (angle / (2 * Math.PI)) - 2.5;
@@ -379,21 +391,32 @@ function updateCards() {
   });
   // progress normalisé par la plage de scroll active
   const progress = Math.min(Math.max((scr.v - scrollStart) / scrollRange, 0), 1);
-  if (glowEl) {
+  if (glowEl && progress !== lastProgress) {
     glowEl.style.opacity = String(Math.min(progress * 1.5, 1));
     glowEl.style.transform = `translate3d(0, ${(1 - progress) * 32}%, 0) scale(${0.55 + progress * 0.65})`;
   }
-  if (outroEl) {
+  if (outroEl && progress !== lastProgress) {
     const op = THREE.MathUtils.smoothstep(progress, 0.86, 0.98);
     outroEl.style.opacity = String(op);
     outroEl.style.transform = `translate3d(0, ${(1 - op) * 34}px, 0)`;
   }
+  lastProgress = progress;
   if (gltfModel) {
     gltfModel.scale.setScalar(0.001 + progress * rocketMax);
     gltfModel.position.y = -3.5 + progress * 10;
     gltfModel.rotation.y = -theta * 0.25;
   }
   mainGroup.position.y = groupY;
+  if (gltfModel) {
+    gltfModel.updateWorldMatrix(true, false);
+    modelWorldBounds.copy(modelBounds).applyMatrix4(gltfModel.matrixWorld);
+    viewProjection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+    viewFrustum.setFromProjectionMatrix(viewProjection);
+    const distance = camera.position.distanceTo(modelWorldBounds.center);
+    const diameter = modelWorldBounds.radius * canvas.clientHeight /
+      (Math.max(distance, camera.near) * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
+    gltfModel.visible = progress > 0 && focus.phase !== 'open' && diameter >= 2 && viewFrustum.intersectsSphere(modelWorldBounds);
+  }
 }
 
 // Scroll-triggered scrub & pin
@@ -586,6 +609,7 @@ const focusOff = () => {
     gsap.to(c.children[0]?.material ?? {}, { opacity: 1, duration: 0.5, delay: 0.4 });
   });
   setFocused(null);
+  requestRender();
 };
 
 // Raycast hover — verbatim CardSimple
@@ -708,27 +732,39 @@ const resize = () => {
     (viewH * camera.aspect * (width - 2 * margin) / width) / 2.2,
     (viewH * previewHeight / height) / (1.45 * (2.2 / (1.45 * 1.5)))
   );
+  requestRender();
 };
+// Animate
+let isVisible = !document.hidden;
+let isInViewport = false;
+let rafId = null;
+
+function requestRender() {
+  if (isVisible && isInViewport && rafId === null) rafId = requestAnimationFrame(animate);
+}
+
 resize();
 window.addEventListener('resize', resize);
-
-// Animate
-let isVisible = true;
-let isInViewport = true;
-let rafId;
-let lastT = 0;
 
 // Pause quand l'onglet est caché
 document.addEventListener('visibilitychange', () => {
   isVisible = !document.hidden;
-  if (isVisible && isInViewport && !rafId) animate();
+  if (!isVisible && rafId !== null) {
+    cancelAnimationFrame(rafId);
+    rafId = null;
+  }
+  requestRender();
 });
 
 // Pause quand la section n'est pas dans le viewport
 if (scrollSection) {
   const visObserver = new IntersectionObserver(([entry]) => {
     isInViewport = entry.isIntersecting;
-    if (isInViewport && isVisible && !rafId) animate();
+    if (!isInViewport && rafId !== null) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+    requestRender();
   }, { threshold: 0.05 });
   visObserver.observe(scrollSection);
 }
@@ -737,12 +773,10 @@ function animate(t=0) {
   // garde AVANT le schedule : sinon la chaine RAF continue en no-op et
   // chaque retour dans le viewport (rafId===null) spawn une chaine de
   // plus -> renders empiles a chaque passage de la section
-  if (!isVisible || !isInViewport) { rafId = null; return; }
-  rafId = requestAnimationFrame(animate);
-  // la vague ambiante n'a pas besoin de 60fps — ~45fps suffit et divise
-  // le coût GPU par ~1.3 ; pendant un focus (vol/hover) on reste fluide
-  if (focus.phase === 'idle' && t - lastT < 22) return;
-  lastT = t;
+  rafId = null;
+  if (!isVisible || !isInViewport) return;
+  // Le carrousel suit chaque frame pour conserver un scroll fluide ;
+  // le preview immobile ne relance pas la boucle après son rendu.
 
   if (focus.phase === 'idle') theta = scr.v;
   updateCards();
@@ -752,6 +786,7 @@ function animate(t=0) {
     }
   });
   renderer.render(scene, camera);
+  if (focus.phase !== 'open') requestRender();
 }
 // garde : l'IntersectionObserver peut déjà avoir démarré la boucle
-if (rafId == null) animate();
+requestRender();
