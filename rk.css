@@ -1040,6 +1040,10 @@ body.is-focus .flexa {
     display: grid;
     justify-items: center;
     text-align: center;
+    /* l'ancien .titre impose width: fit-content — le titre se
+       compressait à ~min-content (un mot par ligne) sur mobile */
+    width: min(100%, 46rem);
+    margin-inline: auto;
     margin-bottom: clamp(2rem, 5vw, 4rem);
     /* neutralise le line-height: 32px hérité de l'ancien .titre */
     line-height: 1.2;
@@ -1069,7 +1073,6 @@ body.is-focus .flexa {
     line-height: 1;
     letter-spacing: -0.045em;
     color: var(--rk-title);
-    text-wrap: balance;
     /* neutralise l'ancien .title générique (padding-top: 5rem,
        padding-left: 10px en mobile ≤625px) */
     padding: 0;
