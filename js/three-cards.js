@@ -514,13 +514,14 @@ const focusOn = (card) => {
   // focus.card resterait set avec overflow=null -> crash au unfocus
   focus.overflow = { root: document.documentElement.style.overflow, body: document.body.style.overflow };
   const trigger = ScrollTrigger.getAll().find((st) => st.trigger === scrollSection);
-  // getTween peut renvoyer l'objet snap (pas un tween gsap — kill
-  // inexistant → crash). On ne touche qu'aux vrais tweens, et la
-  // pause passe par `animation` (propriete fiable, absente sur un
-  // ScrollTrigger.create sans tween)
+  // getTween(true) peut être absent : vérifier kill avant l'appel.
+  // Seul le tween de lissage doit être suspendu, pas `animation` :
+  // reprendre l'animation principale la lirait jusqu'au bout sans scroll.
+  // ScrollTrigger relance son lissage au prochain changement de scroll.
   const snapTw = trigger?.getTween?.(true);
   if (typeof snapTw?.kill === 'function') snapTw.kill();
-  focus.scrubTween = typeof trigger?.animation?.pause === 'function' ? trigger.animation : null;
+  const scrubTween = trigger?.getTween?.();
+  focus.scrubTween = typeof scrubTween?.pause === 'function' ? scrubTween : null;
   focus.scrubTween?.pause();
   scrollSection.classList.add('is-card-focus');
   setFocused({ title: card.userData.title, desc: card.userData.desc });
@@ -597,8 +598,8 @@ const focusOff = () => {
       }
       document.body.classList.remove('is-focus');
       unlockScroll();
-      // en dernier : si resume() jette, le DOM est déjà restauré
-      focus.scrubTween?.resume();
+      // Le prochain scroll relancera le lissage via ScrollTrigger.
+      focus.scrubTween = null;
       gsap.to(u.amp, { value: 0.3, duration: 0.4, overwrite: true });
     }
   })
