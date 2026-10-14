@@ -514,8 +514,13 @@ const focusOn = (card) => {
   // focus.card resterait set avec overflow=null -> crash au unfocus
   focus.overflow = { root: document.documentElement.style.overflow, body: document.body.style.overflow };
   const trigger = ScrollTrigger.getAll().find((st) => st.trigger === scrollSection);
-  trigger?.getTween(true)?.kill();
-  focus.scrubTween = trigger?.getTween();
+  // getTween peut renvoyer l'objet snap (pas un tween gsap — kill
+  // inexistant → crash). On ne touche qu'aux vrais tweens, et la
+  // pause passe par `animation` (propriete fiable, absente sur un
+  // ScrollTrigger.create sans tween)
+  const snapTw = trigger?.getTween?.(true);
+  if (typeof snapTw?.kill === 'function') snapTw.kill();
+  focus.scrubTween = typeof trigger?.animation?.pause === 'function' ? trigger.animation : null;
   focus.scrubTween?.pause();
   scrollSection.classList.add('is-card-focus');
   setFocused({ title: card.userData.title, desc: card.userData.desc });
