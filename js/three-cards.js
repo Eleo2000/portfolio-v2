@@ -162,11 +162,8 @@ const data = [
 ];
 
 
-// Create cards — pipeline CardSimple : canvas 1536×(1536/ratio) plein
-// cadre (pas de letterboxing), redraw(full) = texture miroir pour le
-// flip face caméra en mode focus.
-// fond de tuile légèrement teinté (accent brut à 8% de blanc) —
-// plus de liseré ni halo : la photo seule fait le visuel
+// Create cards — tuile blanche vitrée avec photo encadrée en haut,
+// titre + filet cyan intégrés en bas à gauche (et photo plein cadre en mode preview).
 const accentRawRGB = (() => {
     let c;
     return () => {
@@ -177,7 +174,8 @@ const accentRawRGB = (() => {
         return c;
     };
 })();
-const tileBg = () => `rgb(${accentRawRGB().map((x) => Math.round(255 - (255 - x) * 0.08))})`;
+const tileBg = () => `rgb(${accentRawRGB().map((x) => Math.round(255 - (255 - x) * 0.035))})`;
+const tileAccent = () => `rgb(${accentRawRGB()})`;
 
 const cards = [];
 data.forEach((d) => {
@@ -189,39 +187,103 @@ data.forEach((d) => {
   image.src = d.image;
   image.onload = () => {
     let isFull = false;
+
     const paint = (full = false) => {
-      // ratio FIXE 3:2 : toutes les tuiles partagent le gabarit du plan —
-      // avant h = w/ratio, chaque image imposait sa propre taille visible
+      // ratio FIXE 3:2 : toutes les tuiles partagent le gabarit du plan
       imageCanvas.width = 1536;
       imageCanvas.height = 1024;
       context.setTransform(1, 0, 0, 1, 0, 0);
       context.clearRect(0, 0, imageCanvas.width, imageCanvas.height);
       const w = imageCanvas.width, h = imageCanvas.height;
-      const m = full ? 0 : Math.round(w * 0.014); // marge tuile fine
-      const r = Math.round(w * 0.05);             // arrondi ~ tuile verre RECKLESS
+
+      if (full) {
+        // mode preview : la carte prend le ratio exact de la photo (via
+        // focusX/focusY dans updateCards) -> l'image remplit 100% du cadre
+        // arrondi sans aucune bande ni aucun crop
+        const r = Math.round(w * 0.03);
+        context.save();
+        context.beginPath();
+        context.roundRect(0, 0, w, h, r);
+        context.clip();
+        context.drawImage(image, 0, 0, w, h);
+        context.restore();
+        return;
+      }
+
+      // mode carte carrousel : carte blanche épurée (sans bordure bleue)
+      // + photo entière encadrée en haut + titre & filet en bas à gauche
+      const m = Math.round(w * 0.014);
+      const r = Math.round(w * 0.046);
+      const cardW = w - 2 * m;
+      const cardH = h - 2 * m;
+
       context.save();
       context.beginPath();
-      context.roundRect(m, m, w - 2 * m, h - 2 * m, r);
-      if (full) {
-        // mode preview : plein cadre SANS bordure — fond teinté tuile
-        // (plus de bande blanche dure autour de la photo)
-        context.fillStyle = tileBg();
-        context.fill();
-        context.clip();
-      } else {
-        // surface claire arrondie + photo clippée dedans
-        context.fillStyle = tileBg();
-        context.fill();
-        context.clip();
-      }
-      // contain centré : l'image ENTIÈRE est visible quelle que soit sa
-      // proportion source — letterbox sur la surface de la tuile
-      const inset = m + Math.ceil(r * (1 - Math.SQRT1_2));
-      const iw = w - 2 * inset, ih = h - 2 * inset;
-      const ir = image.width / image.height, tr = iw / ih;
+      context.roundRect(m, m, cardW, cardH, r);
+      const grad = context.createLinearGradient(m, m, m, m + cardH);
+      grad.addColorStop(0, '#ffffff');
+      grad.addColorStop(1, tileBg());
+      context.fillStyle = grad;
+      context.fill();
+      context.lineWidth = 2;
+      context.strokeStyle = 'rgba(10, 26, 38, 0.08)';
+      context.stroke();
+      context.clip();
+
+      // zone photo encadrée en haut de la carte (image entière sans crop
+      // sur fond clair doux assorti à la carte)
+      const pad = Math.round(w * 0.038);
+      const imgX = m + pad;
+      const imgY = m + pad;
+      const imgW = cardW - 2 * pad;
+      const imgH = Math.round(cardH * 0.69);
+      const imgR = Math.round(r * 0.56);
+
+      context.save();
+      context.beginPath();
+      context.roundRect(imgX, imgY, imgW, imgH, imgR);
+      context.fillStyle = '#f2f6fa';
+      context.fill();
+      context.clip();
+      const ir = image.width / image.height;
+      const tr = imgW / imgH;
       let dw, dh;
-      if (ir > tr) { dw = iw; dh = iw / ir; } else { dh = ih; dw = ih * ir; }
-      context.drawImage(image, inset + (iw - dw) / 2, inset + (ih - dh) / 2, dw, dh);
+      if (ir > tr) {
+        dw = imgW;
+        dh = imgW / ir;
+      } else {
+        dh = imgH;
+        dw = imgH * ir;
+      }
+      context.drawImage(image, imgX + (imgW - dw) / 2, imgY + (imgH - dh) / 2, dw, dh);
+      context.restore();
+
+      // titre aligné à gauche sous la photo
+      let fontSize = 68;
+      context.font = `700 ${fontSize}px "League Spartan", sans-serif`;
+      const maxTextW = imgW;
+      const measured = context.measureText(d.title).width;
+      if (measured > maxTextW) {
+        fontSize = Math.max(44, Math.floor(fontSize * (maxTextW / measured)));
+        context.font = `700 ${fontSize}px "League Spartan", sans-serif`;
+      }
+      context.textAlign = 'left';
+      context.textBaseline = 'alphabetic';
+      context.fillStyle = '#0d2538';
+      const footerTop = imgY + imgH;
+      const footerH = m + cardH - footerTop;
+      const titleY = footerTop + Math.round(footerH * 0.54);
+      context.fillText(d.title, imgX, titleY);
+
+      // petit tiret sous le titre
+      const barW = Math.round(w * 0.085);
+      const barH = 7;
+      const barY = titleY + Math.round(footerH * 0.16);
+      context.beginPath();
+      context.roundRect(imgX, barY, barW, barH, barH / 2);
+      context.fillStyle = tileAccent();
+      context.fill();
+
       context.restore();
     };
     paint();
@@ -262,20 +324,19 @@ data.forEach((d) => {
         paint(full);
         texture.needsUpdate = true;
       },
-      // toutes les textures sont 3:2 — la carte focus garde le ratio
-      // du plan (sy ≈ 1.01), fini le scale par ratio d'image variable
-      focusY: 2.2 / (1.45 * 1.5),
+      // en mode preview, la carte épouse le ratio exact de sa photo
+      // (plus aucune bande ni déformation, quelle que soit l'image)
+      focusY: (2.2 / 1.45) / (image.width / image.height),
     };
     mainGroup.add(card);
     cards.push(card);
-    // le titre est bake en canvas : on attend League Spartan (meme
-    // font body du site) pour les vraies metriques
-    Promise.resolve(document.fonts?.load('700 88px "League Spartan"'))
+    // re-bake une fois League Spartan chargée pour avoir les vraies métriques du titre intégré
+    Promise.resolve(document.fonts?.load('700 72px "League Spartan"'))
       .catch(() => {})
       .then(() => {
-        const label = createTextLabel(d.title);
-        label.position.set(0, -1.15, 0);
-        card.add(label);
+        paint(isFull);
+        texture.needsUpdate = true;
+        requestRender();
       });
   };
 
@@ -283,36 +344,6 @@ data.forEach((d) => {
     console.error(`Erreur de chargement de l'image ${d.image}`);
   };
 });
-
-// League Spartan (font body du site) : on mesure puis on reduit la
-// fonte pour rentrer dans la zone sure
-function createTextLabel(text, color = '#0a1a26') {
-  const labelCanvas = document.createElement('canvas');
-  labelCanvas.width = 1024;
-  labelCanvas.height = 256;
-  const ctx = labelCanvas.getContext('2d');
-  let size = 96;
-  ctx.font = `700 ${size}px "League Spartan", sans-serif`;
-  const max = labelCanvas.width - 96;
-  const w = ctx.measureText(text).width;
-  if (w > max) {
-    size = Math.max(44, Math.floor(size * (max / w)));
-    ctx.font = `700 ${size}px "League Spartan", sans-serif`;
-  }
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  // un seul trace net : l'ancien double fillText blanc decalé
-  // ajoutait un "top border" blanc autour des lettres
-  ctx.fillStyle = color;
-  ctx.fillText(text, 512, 128);
-
-  const texture = new THREE.CanvasTexture(labelCanvas);
-  const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
-  const sprite = new THREE.Sprite(material);
-  sprite.scale.set(2.9, 0.72, 1);
-
-  return sprite;
-}
 
 // DOM focus (porté de CardSimple focus-caption / focus-close / glow / outro)
 const focusCaption = document.getElementById('focusCaption');
@@ -550,19 +581,16 @@ const focusOn = (card) => {
     .call(card.userData.setFull, [true], 0.5);
   // micro-burst shader pendant le flip, surface plate ensuite
   gsap.to(u.amp, { value: 0, duration: 0.3, overwrite: true });
-  // carte (et son label) au premier plan
+  // carte au premier plan
   card.renderOrder = 10;
-  card.children.forEach((c) => { c.renderOrder = 10; });
   document.documentElement.style.overflow = 'hidden';
   document.body.style.overflow = 'hidden';
   document.body.classList.add('is-focus');
   lockScroll();
-  gsap.to(card.children[0]?.material ?? {}, { opacity: 0, duration: 0.2 });
   cards.forEach((c) => {
     if (c === card) return;
     gsap.to(c.userData.uniforms.dim, { value: 1, duration: 0.5 });
     gsap.to(c.userData.uniforms.fade, { value: 1, duration: 0.7, ease: 'power2.out' });
-    gsap.to(c.children[0]?.material ?? {}, { opacity: 0, duration: 0.4 });
   });
 };
 
@@ -580,7 +608,6 @@ const focusOff = () => {
   // sinon elle traversait le modele central et les autres cards sans
   // occlusion pendant ~0.9s puis "poppait" en se posant
   card.renderOrder = 0;
-  card.children.forEach((c) => { c.renderOrder = 0; });
   card.material.depthTest = true;
   card.userData.focusTween?.kill();
   gsap.killTweensOf([u.amp, u.hoverStrength, card.userData.hoverAmt]);
@@ -607,12 +634,10 @@ const focusOff = () => {
     .to(u.focus, { value: 0, duration: 0.9, ease: 'power2.inOut' }, 0)
     // retour à la texture tuile à mi-vol retour
     .call(card.userData.setFull, [false], 0.45);
-  gsap.to(card.children[0]?.material ?? {}, { opacity: 1, duration: 0.3, delay: 0.5 });
   cards.forEach((c) => {
     gsap.to(c.userData.uniforms.dim, { value: 0, duration: 0.5 });
     if (c === card) return;
     gsap.to(c.userData.uniforms.fade, { value: 0, duration: 0.6 });
-    gsap.to(c.children[0]?.material ?? {}, { opacity: 1, duration: 0.5, delay: 0.4 });
   });
   setFocused(null);
   requestRender();
@@ -726,17 +751,25 @@ const resize = () => {
   focusWorld.copy(camWorldPos).addScaledVector(camWorldDir, t);
   const dist = camWorldPos.distanceTo(focusWorld);
   const viewH = 2 * dist * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2);
-  const margin = Math.min(22, width * 0.04);
-  // la caption verre se superpose en bas (z-index 10 + ::after) : la card
-  // descend jusqu'au bord — preview quasi plein écran comme l'ancien overlay
-  const previewBottom = height - margin;
-  const previewHeight = Math.max(1, previewBottom - margin);
-  const centerY = (margin + previewBottom) / 2;
+  const isMobile = width < 768;
+  const topMargin = isMobile ? Math.max(24, height * 0.04) : Math.max(16, Math.min(28, height * 0.028));
+  const sideMargin = isMobile ? Math.max(12, width * 0.032) : Math.max(20, Math.min(44, width * 0.032));
+  const captionH = focusCaption ? focusCaption.offsetHeight : 0;
+  // En desktop : grand format immersif (la carte descend bas et la
+  // légende verre flotte légèrement sur le bord inférieur). En mobile :
+  // l'image reste au-dessus de la légende pour ne jamais la masquer.
+  const bottomReserve = isMobile
+    ? (captionH > 0 ? captionH + 28 : Math.round(height * 0.28))
+    : Math.max(36, Math.min(68, height * 0.07));
+  const previewBottom = Math.max(topMargin + 180, height - bottomReserve);
+  const previewHeight = Math.max(1, previewBottom - topMargin);
+  const centerY = (topMargin + previewBottom) / 2;
   const up = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
   focusWorld.addScaledVector(up, (0.5 - centerY / height) * viewH);
+  const cardFocusY = focus.card?.userData?.focusY ?? (2.2 / (1.45 * 1.5));
   coverScale = Math.min(
-    (viewH * camera.aspect * (width - 2 * margin) / width) / 2.2,
-    (viewH * previewHeight / height) / (1.45 * (2.2 / (1.45 * 1.5)))
+    (viewH * camera.aspect * (width - 2 * sideMargin) / width) / 2.2,
+    (viewH * previewHeight / height) / (1.45 * cardFocusY)
   );
   requestRender();
 };
