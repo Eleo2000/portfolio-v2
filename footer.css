@@ -1,322 +1,301 @@
 /* =========================================
-   FOOTER PROFESSIONNEL & RESPONSIVE
+   FOOTER PROFESSIONNEL & RESPONSIVE (.footer.s5.section)
    ========================================= */
 .footer.section {
     position: relative;
     grid-column: 1 / -1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    min-height: 80vh;
-    text-align: center;
+    width: 100%;
+    padding: clamp(2.5rem, 5vw, 4.5rem) 0 0;
+    margin: 0;
+    box-sizing: border-box;
     overflow: hidden;
 }
 
-
-
-
-/* --- Icônes du footer --- */
-.footer .icon {
+/* panneau verre éditorial 90% collé tout en bas sans radius bas */
+.footer-shell {
     position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    margin: 0;
-    cursor: pointer;
-}
-
-.footer .icon svg {
-    width: 1.2rem;
-    height: 1.2rem;
-    transition: transform 0.25s ease;
-}
-
-.footer .icon:hover svg {
-    transform: scale(1.1);
-}
-
-.content-portfolio{
-    font-size: var(--text-detail);
-}
-
-.content-equipe{
-    font-size: 12px;
-    letter-spacing: 3px;
-}
-
-.type{
-    text-transform: uppercase;
-    font-size: 10px;
-    letter-spacing: 2px;
-    line-height: 20px;
-}
-
-/* --- Titre et soulignement --- */
-.titre-footer {
+    isolation: isolate;
+    width: 90%;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: clamp(3rem, 5.5vw, 4.75rem) clamp(1.5rem, 4.5vw, 4rem) clamp(1.5rem, 2.5vw, 2.25rem);
+    border-radius: 24px 24px 0 0;
+    border: 1px solid var(--rk-line);
+    border-bottom: none;
+    background:
+        radial-gradient(ellipse 70% 55% at 50% 0%, color-mix(in srgb, var(--rk-accent) 10%, transparent), transparent 70%),
+        linear-gradient(180deg, color-mix(in srgb, var(--rk-surface) 96%, transparent) 0%, color-mix(in srgb, var(--rk-shell) 92%, transparent) 100%);
+    box-shadow:
+        0 -10px 40px rgba(10, 26, 38, 0.05),
+        0 4px 14px rgba(10, 26, 38, 0.03);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    box-sizing: border-box;
+}
+
+/* grille technique subtile en filigrane dans le haut du footer */
+.footer-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(to right, var(--rk-grid-line2) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--rk-grid-line2) 1px, transparent 1px);
+    background-size: 36px 36px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 65% at 50% 25%, #000 35%, transparent 100%);
+    mask-image: radial-gradient(ellipse 80% 65% at 50% 25%, #000 35%, transparent 100%);
+}
+
+/* --- Bloc principal centré --- */
+.footer-main {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.25rem;
+}
+
+/* --- Titre --- */
+.titre-footer,
+.titre-footer.tn-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    gap: 0.65rem;
+    margin-bottom: 0.25rem;
     z-index: 2;
 }
 
-.title-footer {
-    color: var(--c-principal, beige);
-    font-size: clamp(1.25rem, 3vw, 2rem);
-    letter-spacing: 2px;
-    line-height: 1.2;
+.title-footer,
+.title.title-footer.tn-title {
+    display: block;
+    width: 100%;
+    color: var(--rk-title);
+    font-size: clamp(1.05rem, 4.4vw, 3.2rem);
+    letter-spacing: -0.035em;
+    line-height: 1.08;
     text-transform: none;
+    white-space: nowrap;
+    text-align: center;
     padding: 0;
+    margin-top: 0.35rem;
 }
 
-/* rk.css charge après ce fichier : sans spécificité renforcée,
-   .tn-title (jusqu'à 6rem) écrase la taille du titre footer et le
-   compresse sur tablette/mobile */
-.title-footer.tn-title {
-    font-size: clamp(1.5rem, 4.5vw, 2.8rem);
-    letter-spacing: 2px;
-    line-height: 1.15;
-}
-
-.surligne {
-    width: clamp(6rem, 15vw, 12rem);
-    height: 4px;
-    background: linear-gradient(90deg, transparent, #A4A2A2, transparent);
-    border-radius: 2px;
-}
-
-/* --- Pas de before bleu sur le titre footer --- */
 .title-footer::before {
     content: none;
-}
-
-/* --- Groupes : contenu centré / barre ancrée en bas --- */
-.footer-main {
-    /* margin auto haut+bas : le bloc reste centré dans l'espace
-       disponible au-dessus de la barre du bas */
-    margin: auto 0;
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-}
-.footer-bottom {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.9rem;
-}
-
-/* --- Icônes de contact --- */
-.icons-contact {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-/* --- Copyright --- */
-.copyright {
-    position: relative;
-    z-index: 2;
-    color: #5b7c8d;
-    font-size: var(--text-small);
 }
 
 /* --- Texte d'appel --- */
 .contact-us-f {
     position: relative;
     z-index: 2;
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    letter-spacing: 1.5px;
+    font-family: var(--rk-font-body);
+    font-size: clamp(0.96rem, 1.35vw, 1.12rem);
+    letter-spacing: 0.01em;
     font-weight: 400;
-    color: #2a4556;
-    overflow-wrap: anywhere;
+    color: var(--rk-muted);
     text-align: center;
     width: 100%;
-    max-width: 42rem;
+    max-width: 44ch;
     margin: 0 auto;
-    padding: 0 1rem;
-    box-sizing: border-box;
+    padding: 0;
     line-height: 1.6;
 }
 
-/* --- CTA --- */
-.footer-cta {
+/* --- Action principale --- */
+.footer-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+.footer-actions .hero--btn {
+    margin: 0;
+}
+
+/* --- Barre inférieure structurée en 3 colonnes --- */
+.footer-bottom {
     position: relative;
     z-index: 2;
-    display: inline-block;
-    margin: 0.5rem 0 1rem;
+    width: 100%;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rk-line);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1.25rem;
 }
 
-/* --- Tailles SVG --- */
-.i-fb {
-    width: 30px;
-    height: 30px;
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    justify-self: start;
+}
+.footer-brand__logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: 1px solid #0a1a26;
+    background: #0a1a26;
+    box-shadow: 0 6px 16px rgba(10, 26, 38, 0.16);
+    transition: transform 0.25s ease, background 0.25s ease;
+}
+.footer-brand__logo:hover {
+    transform: translateY(-2px);
+    background: #142838;
+}
+.footer-brand__logo img {
+    width: 22px;
+    height: auto;
+    display: block;
 }
 
-.i-in {
-    width: 30px;
-    height: 30px;
+.copyright {
+    color: var(--rk-muted);
+    font-family: var(--rk-font-body);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
 }
-.i-g {
-    width: 30px;
-    height: 33px;
+
+/* --- Icônes de contact (hover noir foncé) --- */
+.icons-contact {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+}
+
+.footer .icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.55rem;
+    height: 2.55rem;
+    margin: 0;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid var(--rk-border);
+    background: var(--rk-surface);
+    cursor: pointer;
+    transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+.footer .icon::before {
+    content: none;
+}
+.footer .icon:hover {
+    transform: translateY(-2px);
+    border-color: #0a1a26;
+    background: #0a1a26;
+    box-shadow: 0 8px 20px rgba(10, 26, 38, 0.22);
+}
+.footer .icon svg {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.25s ease;
+}
+.footer .icon:hover svg {
+    transform: scale(1.08);
 }
 
 #facebook, #linkedin, #google {
-    fill: rgba(10, 26, 38, 0.5);
+    fill: var(--rk-title);
     transition: fill 0.25s ease;
 }
-
 .footer .icon:hover #facebook,
 .footer .icon:hover #linkedin,
 .footer .icon:hover #google {
-    fill: var(--rk-accent-hover, #2ea8e0);
+    fill: #ffffff;
 }
 
-.footer .icon::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 2px solid rgba(10, 26, 38, 0.12);
-    background: rgba(10, 26, 38, 0.04);
-    transition: border-color 0.25s ease, background 0.25s ease;
+/* --- Bouton retour en haut (hover noir foncé) --- */
+.footer-top-btn {
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--rk-line);
+    background: transparent;
+    color: var(--rk-muted);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.footer-top-btn svg {
+    width: 13px;
+    height: 13px;
+    transition: transform 0.25s ease;
+}
+.footer-top-btn:hover {
+    color: #ffffff;
+    border-color: #0a1a26;
+    background: #0a1a26;
+    box-shadow: 0 8px 20px rgba(10, 26, 38, 0.18);
+    transform: translateY(-2px);
+}
+.footer-top-btn:hover svg {
+    transform: translateY(-2px);
 }
 
-.footer .icon:hover::before {
-    border-color: rgba(95, 164, 255, 0.7);
-    background: linear-gradient(30deg, #18ACFF -20.84%, rgba(255, 255, 255, 0.4) 40.85%);
-}
+/* --- Helpers hérités conservés --- */
+.content-portfolio { font-size: var(--text-detail); }
+.content-equipe { font-size: 12px; letter-spacing: 3px; }
+.type { text-transform: uppercase; font-size: 10px; letter-spacing: 2px; line-height: 20px; }
+.section { margin-top: 1rem; margin-bottom: 1.5rem; }
+.accueil { padding-top: 4rem; }
+.footer { padding-bottom: 0; margin-bottom: 0; }
+.footer .right::before { background: none !important; }
+.prev, .next { font-family: 'League Spartan', sans-serif; }
 
-/* --- Canvas 3D en haut du footer, responsive --- */
-#threejs-container-2 {
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    height: clamp(12rem, 35vh, 22rem);
-    pointer-events: none;
-    z-index: 0;
-}
-
-#threejs-container-2 canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-    pointer-events: none;
-}
-
-#fireflies-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 1;
-}
-  
-  .firefly {
-    position: absolute;
-    bottom: 0;
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    opacity: 0;
-    transform: translate(0, 0) scale(0.8);
-    animation: floatUp 5s ease-out forwards;
-  }
-  
-  @keyframes floatUp {
-    0% {
-      opacity: 0;
-      transform: translate(0, 0) scale(0.8);
-    }
-    10% {
-      opacity: 1;
-    }
-    70% {
-      opacity: 0.8;
-    }
-    100% {
-      opacity: 0;
-      transform: translate(var(--x-move, 0px), -220px) scale(1.1);
-    }
-  }
-  
-
-@media screen and (max-width: 800px) {
+/* --- Responsive tablette & mobile --- */
+@media screen and (max-width: 820px) {
     .footer.section {
-        padding: 4rem 1.25rem 1.5rem;
-        min-height: auto;
+        padding: 2rem 0 0;
     }
-
-    .title-footer.tn-title {
-        font-size: clamp(1.4rem, 5.5vw, 2rem);
+    .footer-shell {
+        width: 94%;
+        max-width: 94%;
+        padding: 2.25rem 1.25rem 1.5rem;
+        border-radius: 20px 20px 0 0;
+        gap: 2rem;
     }
-}
-
-@media screen and (max-width: 680px) {
-    .footer.section {
-        padding: 3rem 1rem 1.25rem;
-        gap: 1.25rem;
+    .title.title-footer.tn-title {
+        font-size: clamp(1rem, 4.6vw, 2.2rem);
     }
-
-    .title-footer.tn-title {
-        letter-spacing: 1px;
+    .footer-bottom {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+        gap: 1rem;
     }
-
-    .icons-contact {
-        gap: 1.25rem;
+    .footer-brand {
+        justify-self: center;
+        flex-direction: column;
+        gap: 0.5rem;
     }
-
-    .footer .icon {
-        width: 2.3rem;
-        height: 2.3rem;
-    }
-
-    .footer .icon svg {
-        width: 0.95rem;
-        height: 0.95rem;
-    }
-
-    .contact-us-f {
-        padding: 0;
+    .footer-top-btn {
+        justify-self: center;
     }
 }
-
-.section{
-    margin-top:1rem ;
-    margin-bottom: 1.5rem;
-}
-.accueil{
-    padding-top: 4rem;
-
-}
-.footer{
-    padding-bottom:1.5rem;
-    margin-bottom: 0;
-}
-
-.footer .right::before {
-    background: none!important;
-}
-
-.prev , .next{
-    font-family: 'League Spartan', sans-serif;
-}
-

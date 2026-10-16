@@ -334,9 +334,9 @@ window.addEventListener('DOMContentLoaded', () => {
     gsap.registerPlugin(ScrollTrigger);
 
     const SLIDES = [
-        { model: 'assets/3d/slides/pc.glb', name: 'Web development', desc: 'Modern responsive websites and web applications built around your business needs.' },
-        { model: 'assets/3d/pencil.glb', name: 'UI/UX Design', desc: 'Interfaces, prototypes and visual design — clean layouts that users understand instantly.' },
-        { model: 'assets/3d/slides/floating_low_poly_island.glb', name: 'Bug fixing & maintenance', desc: 'Fix existing frontend/backend issues, improve UI, refactor code and add new features.' },
+        { model: 'assets/3d/slides/pc.glb', name: 'Web development', desc: 'Fast, responsive websites and web apps.' },
+        { model: 'assets/3d/pencil.glb', name: 'UI/UX Design', desc: 'Clean interfaces and interactive prototypes.' },
+        { model: 'assets/3d/slides/floating_low_poly_island.glb', name: 'Bug fixing & maintenance', desc: 'Fixes, refactoring and new features.' },
     ];
 
     const views = SLIDES.map((_, i) => document.getElementById(`slide-${i}`));

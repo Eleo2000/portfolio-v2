@@ -312,33 +312,6 @@
     cursor: pointer;
 }
 
-/******Scrollbar ********/
-/* width */
-::-webkit-scrollbar {
-	background: transparent; 
-    border: 2px solid rgba(36, 36, 36, 0.212); 
-    width: 14px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-   border-radius: 10px;
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-    transition:0.4s ease-in-out;
-  background:linear-gradient(90deg, rgba(126, 193, 255, 0.247),rgba(24, 86, 145, 0.233) 100%) ; 
-  border-radius: 2px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(90deg, rgb(84, 158, 226), rgb(22, 70, 116) ); 
-  
-  
-}
-
 .container{
     position: relative;
     overflow: hidden;
